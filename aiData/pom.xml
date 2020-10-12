@@ -61,6 +61,13 @@
             <version>1</version>
         </dependency>
 
+        <!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.16.10</version>
+        </dependency>
+
     </dependencies>
     <!-- Spring Boot也提供了一个可选的 Maven Plugin来创建可执行的jars,可以将应用打包成一个可执行的jar，无需安装tomcat -->
     <build>
