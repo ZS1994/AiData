@@ -7,24 +7,25 @@
 		<artifactId>aiData</artifactId>
 		<version>1.0-SNAPSHOT</version>
 	</parent>
-
 	<groupId>com.zs</groupId>
-	<artifactId>cmcc-api</artifactId>
+	<artifactId>core</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>cmcc-api</name>
-
+	<name>core</name>
 
 	<properties>
 		<java.version>1.8</java.version>
 	</properties>
 
 	<dependencies>
-		<dependency>
-			<groupId>com.zs</groupId>
-			<artifactId>core</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
-		</dependency>
 	</dependencies>
 
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
 
 </project>
