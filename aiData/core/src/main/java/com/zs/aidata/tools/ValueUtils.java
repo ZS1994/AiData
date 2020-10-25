@@ -1,10 +1,20 @@
 package com.zs.aidata.tools;
 
-import com.zs.aidata.core.BaseDomainVO;
+import com.zs.aidata.core.BaseEntityVO;
 import com.zs.aidata.core.ZsApplication;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -15,6 +25,10 @@ import java.util.Map;
  * @since 2020/10/18
  */
 public class ValueUtils {
+
+    public static String FORMAT_DATE_14 = "yyyyMMddHHmmss";
+    public static String FORMAT_DATE_NORMAL = "yyyy/MM/dd HH:mm:ss";
+
 
     /**
      * 判断一个对象是不是空，
@@ -53,7 +67,7 @@ public class ValueUtils {
      * @param fieldNames
      * @throws Exception
      */
-    public void checkNotEmpty(Object obj, String... fieldNames) throws Exception {
+    public static void checkNotEmpty(Object obj, String... fieldNames) throws Exception {
         if (isEmpty(obj)) {
             throw new ZsApplication("对象为空");
         }
@@ -68,7 +82,7 @@ public class ValueUtils {
         //我们项目的所有实体类都继承BaseDomain （所有实体基类：该类只是串行化一下）
         //不需要的自己去掉即可
         Object value = "";
-        if (object != null && object instanceof BaseDomainVO) {//if (object!=null )  ----begin
+        if (object != null && object instanceof BaseEntityVO) {//if (object!=null )  ----begin
             // 拿到该类
             Class<?> clz = object.getClass();
             // 获取实体类的所有属性，返回Field数组
@@ -76,7 +90,7 @@ public class ValueUtils {
             // 找出field
             Field field = null;
             for (Field f : fields) {
-                if (field.getName().equals(fieldName)) {
+                if (f.getName().equals(fieldName)) {
                     field = f;
                     break;
                 }
@@ -106,4 +120,50 @@ public class ValueUtils {
         return new String(items);
     }
 
+
+    /**
+     * 日期转为相应格式的字符串
+     *
+     * @param date   为null默认当前时间
+     * @param format 为空默认14格式
+     * @return
+     */
+    public static String toDateString(Date date, String format) {
+        if (isEmpty(date)) {
+            date = new Date();
+        }
+        if (isEmpty(format)) {
+            format = FORMAT_DATE_14;
+        }
+        SimpleDateFormat sdf = new SimpleDateFormat(format);
+        return sdf.format(date);
+    }
+
+    public static String getMD5Str(String str) {
+        byte[] digest = null;
+        try {
+            MessageDigest md5 = MessageDigest.getInstance("md5");
+            digest = md5.digest(str.getBytes("utf-8"));
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        //16是表示转换为16进制数
+        String md5Str = new BigInteger(1, digest).toString(16);
+        return md5Str;
+    }
+
+    public static ServletRequestAttributes getRequestAttributes() {
+        return (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+    }
+
+    public static HttpServletRequest getRequest() {
+        return getRequestAttributes().getRequest();
+    }
+
+
+    public static HttpSession getSession() {
+        return getRequest().getSession();
+    }
 }

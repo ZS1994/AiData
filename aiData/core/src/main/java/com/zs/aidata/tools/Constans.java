@@ -1,6 +1,7 @@
 package com.zs.aidata.tools;
 
 import java.security.MessageDigest;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -9,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 /**
  * 张顺，2017-10-19
  * 存储一些公共变量
+ *
  * @author it023
  * 2019-6-13，张顺
  * 以后部署项目的话，需要在这个地方更改一些配置
@@ -16,61 +18,67 @@ import lombok.extern.slf4j.Slf4j;
  * 2、tomcat配置的图片文件夹映射，请这样配：
  * <Context docBase="E:/tomcat_imgs/" path="/tomcat_imgs" reloadable="true"/>
  * 3、爬虫1号的id
- *
  */
 @Slf4j
 public class Constans {
 
 
-	public static final String USER="[user]";
-	//用于存session里面登录的用户
-	public static final String USER_ME_ID = "userMeId";
-	//用于存session里面登录的用户的token
-	public static final String TOKEN = "token";
-	
-	
-	public static final String URL="[url]";
-	public static final String METHOD="[method]";
-	
-	public static final Integer CRAWLERNO1=6;//爬虫1号
-	public static final Integer CRAWLERNO2=97;//爬虫二号
-	public static final Integer CRAWLERNO3=241;//爬虫三号
-	
-	/**
-	 * 小佩礼物的保存结果的权限id
-	 */
-	public static final Integer PER_ID_LOVEXIAOPEI_SAVE = 99;
-	
-	public static final Integer INFINITY=99999;//无穷大，用作全部查询时使用
-	
-	@Deprecated
-	public static final String PATH_ROOT="E:/tomcat_imgs/";//张顺，2019-6-17，已改为spring配置文件配置
-	public static final String PATH_TOMCAT_IMGS="/tomcat_imgs/";
-	
-	/**
-	 * 从权限拦截器中尝试获取当前用户，一定会有一个用户，如果未登录那么取的就是一个游客用户
-	 * @param req
-	 * @return
-	 */
-	public static String getUrlFromReq(HttpServletRequest req){
-		return (String)req.getAttribute(URL);
-	}
-	public static String getMethodFromReq(HttpServletRequest req){
-		return (String)req.getAttribute(METHOD);
-	}
-	
-	
-	/**
-	 * 从已存在的线程中找一个线程，若没找到才会创建一个，确保进程中该线程只有一个
-	 * @param target  一般为自己
-	 * @param name  非空
-	 * @return
-	 */
-	public static Thread getThread(Runnable target, String name) {
-		if (name == null) {
-			return null;
-		}
-		ThreadGroup group = Thread.currentThread().getThreadGroup();
+    public static final String USER = "[user]";
+    //用于存session里面登录的用户
+    public static final String USER_ME_ID = "userMeId";
+    //用于存session里面登录的用户的token
+    public static final String TOKEN = "token";
+
+
+    public static final String URL = "[url]";
+    public static final String METHOD = "[method]";
+
+    public static final Integer CRAWLERNO1 = 6;//爬虫1号
+    public static final Integer CRAWLERNO2 = 97;//爬虫二号
+    public static final Integer CRAWLERNO3 = 241;//爬虫三号
+
+    /**
+     * 小佩礼物的保存结果的权限id
+     */
+    public static final Integer PER_ID_LOVEXIAOPEI_SAVE = 99;
+
+    public static final Integer INFINITY = 99999;//无穷大，用作全部查询时使用
+
+    @Deprecated
+    public static final String PATH_ROOT = "E:/tomcat_imgs/";//张顺，2019-6-17，已改为spring配置文件配置
+    public static final String PATH_TOMCAT_IMGS = "/tomcat_imgs/";
+
+    public static final String FLAG_Y = "Y";
+    public static final String FLAG_N = "N";
+
+
+    /**
+     * 从权限拦截器中尝试获取当前用户，一定会有一个用户，如果未登录那么取的就是一个游客用户
+     *
+     * @param req
+     * @return
+     */
+    public static String getUrlFromReq(HttpServletRequest req) {
+        return (String) req.getAttribute(URL);
+    }
+
+    public static String getMethodFromReq(HttpServletRequest req) {
+        return (String) req.getAttribute(METHOD);
+    }
+
+
+    /**
+     * 从已存在的线程中找一个线程，若没找到才会创建一个，确保进程中该线程只有一个
+     *
+     * @param target 一般为自己
+     * @param name   非空
+     * @return
+     */
+    public static Thread getThread(Runnable target, String name) {
+        if (name == null) {
+            return null;
+        }
+        ThreadGroup group = Thread.currentThread().getThreadGroup();
         ThreadGroup topGroup = group;
         // 遍历线程组树，获取根线程组
         while (group != null) {
@@ -87,18 +95,20 @@ public class Constans {
         System.arraycopy(slackThreads, 0, atualThreads, 0, actualSize);
         log.info("线程数量是：" + atualThreads.length);
         for (Thread thread : atualThreads) {
-        	if (thread.getName().equals(name)) {
-	        	log.info("找到该线程，线程名称: " + thread.getName());
-				return thread;
-			}
+            if (thread.getName().equals(name)) {
+                log.info("找到该线程，线程名称: " + thread.getName());
+                return thread;
+            }
         }
         return new Thread(target, name);
-	}
-	
-	/**sha1加密*/
-	public static String getSha1(String str) {
-        char hexDigits[] = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
-            'a', 'b', 'c', 'd', 'e', 'f' };
+    }
+
+    /**
+     * sha1加密
+     */
+    public static String getSha1(String str) {
+        char hexDigits[] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
+                'a', 'b', 'c', 'd', 'e', 'f'};
         try {
             MessageDigest mdTemp = MessageDigest.getInstance("SHA1");
             mdTemp.update(str.getBytes("UTF-8"));
@@ -116,4 +126,6 @@ public class Constans {
             return null;
         }
     }
+
+
 }

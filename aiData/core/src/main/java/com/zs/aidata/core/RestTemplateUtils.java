@@ -35,12 +35,12 @@ public class RestTemplateUtils {
      * 通用的请求方法
      *
      * @param url
-     * @param requestMethod
+     * @param method
      * @param params
      * @param header
      * @return
      */
-    public static String execHttpRequest(String url, HttpMethod requestMethod, Map<String, String> params, Map<String, String> header) {
+    public static String execHttpRequest(String url, String method, Map<String, String> params, Map<String, String> header) {
         HttpHeaders headers = new HttpHeaders();
         // 设置header
         if (ValueUtils.isNotEmpty(header)) {
@@ -60,9 +60,22 @@ public class RestTemplateUtils {
             });
         }
         HttpEntity<Map> requestEntity = new HttpEntity<Map>(param, headers);
-        ResponseEntity<String> response = rest.exchange(url, HttpMethod.POST, requestEntity, String.class);
+
+        HttpMethod httpMethod = HttpMethod.POST;
+        switch (method.toLowerCase()) {
+            case "post":
+                httpMethod = httpMethod.POST;
+                break;
+            case "get":
+                httpMethod = httpMethod.GET;
+                break;
+        }
+        ResponseEntity<String> response = rest.exchange(url, httpMethod, requestEntity, String.class);
         String str = response.getBody();
-        log.info(str.toString());
+        log.info("url：" + url);
+        log.info("httpMethod：" + httpMethod);
+        log.info("requestEntity：" + requestEntity);
+        log.info("response：" + str);
         return str;
     }
 

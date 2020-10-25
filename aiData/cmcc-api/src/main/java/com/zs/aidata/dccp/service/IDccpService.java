@@ -20,6 +20,6 @@ public interface IDccpService {
     String LZY_PHONE = "13502898808";
     String ZS_PHONE = "15022084174";
 
-    DccpOutVO sendSmsCode();
+    DccpOutVO sendSmsCode(String tel);
 
 }

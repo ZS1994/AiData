@@ -1,5 +1,6 @@
 package com.zs.aidata.core;
 
+import com.zs.aidata.tools.ValueUtils;
 import org.springframework.web.client.RestTemplate;
 
 /**
@@ -14,5 +15,19 @@ public class BaseCoreService {
         return RestTemplateUtils.getRestemplate();
     }
 
+
+    public boolean isEmpty(Object o) {
+        return ValueUtils.isEmpty(o);
+    }
+
+
+    public boolean isNotEmpty(Object o) {
+        return !isEmpty(o);
+    }
+
+
+    public void checkNotEmpty(Object obj, String... fieldNames) throws Exception {
+        ValueUtils.checkNotEmpty(obj, fieldNames);
+    }
 
 }

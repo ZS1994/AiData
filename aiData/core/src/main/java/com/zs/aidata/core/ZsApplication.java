@@ -1,5 +1,7 @@
 package com.zs.aidata.core;
 
+import java.text.MessageFormat;
+
 /**
  * 该项目唯一指定的自定义异常
  *
@@ -7,6 +9,8 @@ package com.zs.aidata.core;
  * @since 2020/10/18
  */
 public class ZsApplication extends RuntimeException {
+
+    private String message;
 
     /**
      * 会自动替换里面的关键字。{0}，{1}，{2}。。。。{n}。
@@ -19,11 +23,23 @@ public class ZsApplication extends RuntimeException {
         for (int i = 0; i < keyWords.length; i++) {
             modelMessage = modelMessage.replace("{" + i + "}", keyWords[i]);
         }
-        new ZsApplication(modelMessage);
+        fillInStackTrace();
+        message = modelMessage;
     }
 
 
-    public ZsApplication(String message) {
-        super(message);
+    public ZsApplication(String msg) {
+        super(msg);
+        message = msg;
+    }
+
+    @Override
+    public String getMessage() {
+        return message;
+    }
+
+    @Override
+    public String toString() {
+        return MessageFormat.format("{0}", getMessage());
     }
 }
