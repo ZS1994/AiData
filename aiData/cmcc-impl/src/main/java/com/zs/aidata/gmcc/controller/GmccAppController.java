@@ -8,6 +8,7 @@ import com.zs.aidata.gmcc.vo.GmccLoginVO;
 import com.zs.aidata.gmcc.vo.GmccOutVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,6 +22,7 @@ import javax.inject.Inject;
 @Api(tags = {"广东移动"})
 @RestController
 @RequestMapping(value = "cmcc/gmcc", headers = "Accept=application/json", produces = "application/json;charset=UTF-8")
+@CrossOrigin(origins = "http://127.0.0.1:8010", maxAge = 3600, allowCredentials = "true")
 public class GmccAppController extends BaseCoreService {
 
     @Inject
