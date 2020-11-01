@@ -51,7 +51,7 @@ public class Constans {
     public static final String FLAG_Y = "Y";
     public static final String FLAG_N = "N";
 
-
+    public static String KEY_GMCC_SESSION_ID = "GMCC_SESSION_ID";
     /**
      * 从权限拦截器中尝试获取当前用户，一定会有一个用户，如果未登录那么取的就是一个游客用户
      *

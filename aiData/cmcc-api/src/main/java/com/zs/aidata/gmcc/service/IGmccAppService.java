@@ -39,7 +39,7 @@ public interface IGmccAppService {
     String PATH = "http://gd.10086.cn/gmccapp";
     String GMCC_APP_ID = "51cc2c2ac500435e91ca9ca1b0449baa";
 
-    String KEY_GMCC_SESSION_ID = "GMCC_SESSION_ID";
+
 
     /**
      * 广东移动的基础的ajax方法转为java版，原函数名叫做sys_doAjax

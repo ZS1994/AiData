@@ -154,16 +154,18 @@ public class ValueUtils {
         return md5Str;
     }
 
-    public static ServletRequestAttributes getRequestAttributes() {
-        return (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-    }
-
     public static HttpServletRequest getRequest() {
-        return getRequestAttributes().getRequest();
+        ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+        return servletRequestAttributes.getRequest();
     }
 
 
-    public static HttpSession getSession() {
-        return getRequest().getSession();
+    public static Date addHours(Date date, int hour) {
+        if (isEmpty(date)) {
+            date = new Date();
+        }
+        date.setTime(date.getTime() + (1000 * 60 * 60) * hour);
+        return date;
     }
+
 }

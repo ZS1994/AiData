@@ -8,7 +8,6 @@ import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Component;
 
 @Slf4j
-@Component
 public class SpringUtil implements ApplicationContextAware {
 
     private static ApplicationContext applicationContext;

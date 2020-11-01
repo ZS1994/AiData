@@ -128,7 +128,7 @@ public class GmccAppService extends BaseCoreService implements IGmccAppService {
 
     @Override
     public String getSessionid() throws Exception {
-        Object sessionid = ValueUtils.getSession().getAttribute(KEY_GMCC_SESSION_ID);
+        Object sessionid = ValueUtils.getRequest().getAttribute(Constans.KEY_GMCC_SESSION_ID);
         if (isEmpty(sessionid)) {
             String sessionRes = sessionidRequest(null);
             return sessionRes;
@@ -139,7 +139,7 @@ public class GmccAppService extends BaseCoreService implements IGmccAppService {
 
     @Override
     public void setSessionid(String sessionid) {
-        ValueUtils.getSession().setAttribute(KEY_GMCC_SESSION_ID, sessionid);
+        ValueUtils.getRequest().setAttribute(Constans.KEY_GMCC_SESSION_ID, sessionid);
     }
 
     @Override
