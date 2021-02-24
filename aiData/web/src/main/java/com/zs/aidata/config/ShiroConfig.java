@@ -52,23 +52,23 @@ public class ShiroConfig {
     public ShiroFilterFactoryBean shiroFilter(SecurityManager securityManager) {
         ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
         shiroFilterFactoryBean.setSecurityManager(securityManager);
-        // 配置用户的登录请求，如果需要进行登录，shiro就要会转到这个请求进入这个登录页面
+        /*// 配置用户的登录请求，如果需要进行登录，shiro就要会转到这个请求进入这个登录页面
         shiroFilterFactoryBean.setLoginUrl("/");
         // 配置登录成功后的地址
         shiroFilterFactoryBean.setSuccessUrl("/success");
         // 配置没有权限的地址
-        shiroFilterFactoryBean.setUnauthorizedUrl("/noPermission");
+        shiroFilterFactoryBean.setUnauthorizedUrl("/noPermission");*/
 
         // 配置权限的拦截规则
         Map<String, String> filterChainMap = new HashMap<>();
-        // 配置登录请求不需要认证
+        /*// 配置登录请求不需要认证
         filterChainMap.put("/login", "anon");
         // 配置登出会清空当前用户的内存
         filterChainMap.put("/logout", "logout");
         // admin开头的请求需要登录认证
         filterChainMap.put("/admin/**", "authc");
         // 配置剩余请求必须全部需要进行登录认证，注意这个必须写在最后
-        filterChainMap.put("/**", "authc");
+        filterChainMap.put("/**", "authc");*/
 
         // 设置权限拦截规则
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainMap);

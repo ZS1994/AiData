@@ -40,7 +40,6 @@ public interface IGmccAppService {
     String GMCC_APP_ID = "51cc2c2ac500435e91ca9ca1b0449baa";
 
 
-
     /**
      * 广东移动的基础的ajax方法转为java版，原函数名叫做sys_doAjax
      * <p>
@@ -93,4 +92,7 @@ public interface IGmccAppService {
      * @return
      */
     GmccOutVO login(String phone, String smsCode) throws Exception;
+
+
+    String getRandom(int length);
 }

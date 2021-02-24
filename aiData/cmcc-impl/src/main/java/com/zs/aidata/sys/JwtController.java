@@ -1,4 +1,4 @@
-package com.zs.aidata.sys.controller;
+package com.zs.aidata.sys;
 
 import com.zs.aidata.core.BaseCoreService;
 import com.zs.aidata.gmcc.service.IGmccAppService;

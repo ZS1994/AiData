@@ -1,12 +1,11 @@
 package com.zs.aidata.tools;
 
 import com.zs.aidata.core.BaseEntityVO;
-import com.zs.aidata.core.ZsApplication;
+import com.zs.aidata.core.AiDataApplication;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -69,11 +68,11 @@ public class ValueUtils {
      */
     public static void checkNotEmpty(Object obj, String... fieldNames) throws Exception {
         if (isEmpty(obj)) {
-            throw new ZsApplication("对象为空");
+            throw new AiDataApplication("对象为空");
         }
         for (String field : fieldNames) {
             if (isEmpty(getFieldValue(obj, field))) {
-                throw new ZsApplication("属性{0}值不能为空", field);
+                throw new AiDataApplication("属性{0}值不能为空", field);
             }
         }
     }
@@ -96,7 +95,7 @@ public class ValueUtils {
                 }
             }
             if (isEmpty(field)) {
-                throw new ZsApplication("找不到{0}字段", fieldName);
+                throw new AiDataApplication("找不到{0}字段", fieldName);
             }
             // 拿到该属性的gettet方法
             /**

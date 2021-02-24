@@ -79,8 +79,7 @@ public class GmccAppService extends BaseCoreService implements IGmccAppService {
         h.putAll(inVo.getHeader());
         h.putAll(hDefault);
 
-        String url = "serviceValue/serviceKey/".replace("serviceValue", PATH)
-                .replace("serviceKey", inVo.getService());
+        String url = "serviceValue/serviceKey/".replace("serviceValue", PATH).replace("serviceKey", inVo.getService());
         String sessionid = "";
         // 张顺，2020-10-26 01:02:54，这里通过标记来判断是否需要sessionid，目前只有获取sessionid时可以传Y
         if (Constans.FLAG_Y.equals(inVo.getWithoutSessionidFlag())) {
@@ -237,7 +236,8 @@ public class GmccAppService extends BaseCoreService implements IGmccAppService {
     /**
      * 获取指定位数的随机数
      */
-    private String getRandom(int length) {
+    @Override
+    public String getRandom(int length) {
         String res = (Math.random() + "").substring(2);
         if (res.length() > length) return res.substring(0, length);
         while (res.length() < length) {

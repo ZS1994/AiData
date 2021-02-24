@@ -1,29 +1,44 @@
 package com.zs.aidata.realm;
 
-import org.apache.shiro.authc.AuthenticationException;
-import org.apache.shiro.authc.AuthenticationInfo;
-import org.apache.shiro.authc.AuthenticationToken;
-import org.apache.shiro.realm.Realm;
+import org.apache.shiro.authc.*;
+import org.apache.shiro.realm.AuthenticatingRealm;
 
 /**
  * 自定义的realm用来实现用户的认证和授权的
+ * AuthenticatingRealm是专门用于用户认证的
  *
  * @author 张顺
  * @since 2021/2/18
  */
-public class MyRealm implements Realm {
+public class MyRealm extends AuthenticatingRealm {
+    /**
+     * 用户认证的方法
+     *
+     * @param token 用户身份，存放用户的账号和密码
+     * @return 用户登录成功后的身份证明
+     * @throws AuthenticationException 如果认证失败，那么shiro会抛出各种异常
+     */
     @Override
-    public String getName() {
-        return null;
-    }
+    protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
+        UsernamePasswordToken userToken = (UsernamePasswordToken) token;
+        // 获取页面中传递的用户账号
+        String username = userToken.getUsername();
+        // 获取页面中的用户密码，实际工作中基本上用不着
+        String password = new String(userToken.getPassword());
+        // 认证账号，这里应该从数据库中获取数据
+        if (!"admin".equals(username)) {
+            // 密码错误
+            throw new UnknownAccountException("账号错误");
+        }
+        // 这里到底要怎么校验就看自己的需要了。如果现有的异常无法满足要求，也可以实现自定义的异常
 
-    @Override
-    public boolean supports(AuthenticationToken authenticationToken) {
-        return false;
-    }
-
-    @Override
-    public AuthenticationInfo getAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
-        return null;
+        /**
+         * 创建密码认证对象，由shiro自动认证密码
+         * 参数1：数据库中的账号（或者页面账号均可）
+         * 参数2：数据中读取数据来的密码
+         * 参数3：当前realm的名称
+         * 如果密码认证成功则返回一个用户身份对象，如果密码认证失败，则shiro会抛出异常
+         */
+        return new SimpleAuthenticationInfo(username, "123456", getName());
     }
 }
