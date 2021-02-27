@@ -102,6 +102,19 @@
             <artifactId>java-jwt</artifactId>
             <version>3.9.0</version>
         </dependency>
+
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-all</artifactId>
+            <version>5.5.9</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>21.0</version>
+        </dependency>
+
     </dependencies>
     <!-- Spring Boot也提供了一个可选的 Maven Plugin来创建可执行的jars,可以将应用打包成一个可执行的jar，无需安装tomcat -->
     <build>

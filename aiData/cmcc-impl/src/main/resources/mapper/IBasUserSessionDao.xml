@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.zs.aidata.gmcc.dao.IBasUserSessionDao">
-    <resultMap id="BaseResultMap" type="com.zs.aidata.gmcc.vo.BasUserSessionDO">
+<mapper namespace="com.zs.aidata.cmcc.gmcc.dao.IBasUserSessionDao">
+    <resultMap id="BaseResultMap" type="com.zs.aidata.cmcc.gmcc.vo.BasUserSessionDO">
         <id column="p_id" jdbcType="INTEGER" property="pId"/>
         <result column="phone" jdbcType="VARCHAR" property="phone"/>
         <result column="session_id" jdbcType="VARCHAR" property="sessionId"/>
-        <result column="create_by_id" jdbcType="VARCHAR" property="createById"/>
-        <result column="create_by_user" jdbcType="VARCHAR" property="createByUser"/>
-        <result column="create_date" jdbcType="TIMESTAMP" property="createDate"/>
-        <result column="update_by_id" jdbcType="VARCHAR" property="updateById"/>
-        <result column="update_by_user" jdbcType="VARCHAR" property="updateByUser"/>
-        <result column="update_date" jdbcType="TIMESTAMP" property="updateDate"/>
+        <result column="creation_by_id" jdbcType="VARCHAR" property="creationById"/>
+        <result column="creation_by_user" jdbcType="VARCHAR" property="creationByUser"/>
+        <result column="creation_date" jdbcType="TIMESTAMP" property="creationDate"/>
+        <result column="last_updated_by_id" jdbcType="VARCHAR" property="lastUpdatedById"/>
+        <result column="last_updated_by_user" jdbcType="VARCHAR" property="lastUpdatedByUser"/>
+        <result column="last_updated_date" jdbcType="TIMESTAMP" property="lastUpdatedDate"/>
     </resultMap>
     <sql id="Base_Column_List">
-        p_id, phone, session_id, create_by_id, create_by_user, create_date, update_by_id,
-        update_by_user, update_date
+        p_id, phone, session_id, creation_by_id, creation_by_user, creation_date, last_updated_by_id,
+        last_updated_by_user, last_updated_date
     </sql>
     <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
         select
@@ -26,17 +26,18 @@
         delete from t_bas_user_session
         where p_id = #{pId,jdbcType=INTEGER}
     </delete>
-    <insert id="insert" parameterType="com.zs.aidata.gmcc.vo.BasUserSessionDO">
+    <insert id="insert" parameterType="com.zs.aidata.cmcc.gmcc.vo.BasUserSessionDO">
         insert into t_bas_user_session (p_id, phone, session_id,
-        create_by_id, create_by_user, create_date,
-        update_by_id, update_by_user, update_date
+        creation_by_id, creation_by_user, creation_date,
+        last_updated_by_id, last_updated_by_user, last_updated_date
         )
         values (#{pId,jdbcType=INTEGER}, #{phone,jdbcType=VARCHAR}, #{sessionId,jdbcType=VARCHAR},
-        #{createById,jdbcType=VARCHAR}, #{createByUser,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP},
-        #{updateById,jdbcType=VARCHAR}, #{updateByUser,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP}
+        #{creationById,jdbcType=VARCHAR}, #{creationByUser,jdbcType=VARCHAR}, #{creationDate,jdbcType=TIMESTAMP},
+        #{lastUpdatedById,jdbcType=VARCHAR}, #{lastUpdatedByUser,jdbcType=VARCHAR},
+        #{lastUpdatedDate,jdbcType=TIMESTAMP}
         )
     </insert>
-    <insert id="insertSelective" parameterType="com.zs.aidata.gmcc.vo.BasUserSessionDO">
+    <insert id="insertSelective" parameterType="com.zs.aidata.cmcc.gmcc.vo.BasUserSessionDO">
         insert into t_bas_user_session
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="pId != null">
@@ -48,23 +49,23 @@
             <if test="sessionId != null">
                 session_id,
             </if>
-            <if test="createById != null">
-                create_by_id,
+            <if test="creationById != null">
+                creation_by_id,
             </if>
-            <if test="createByUser != null">
-                create_by_user,
+            <if test="creationByUser != null">
+                creation_by_user,
             </if>
-            <if test="createDate != null">
-                create_date,
+            <if test="creationDate != null">
+                creation_date,
             </if>
-            <if test="updateById != null">
-                update_by_id,
+            <if test="lastUpdatedById != null">
+                last_updated_by_id,
             </if>
-            <if test="updateByUser != null">
-                update_by_user,
+            <if test="lastUpdatedByUser != null">
+                last_updated_by_user,
             </if>
-            <if test="updateDate != null">
-                update_date,
+            <if test="lastUpdatedDate != null">
+                last_updated_date,
             </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -77,27 +78,27 @@
             <if test="sessionId != null">
                 #{sessionId,jdbcType=VARCHAR},
             </if>
-            <if test="createById != null">
-                #{createById,jdbcType=VARCHAR},
+            <if test="creationById != null">
+                #{creationById,jdbcType=VARCHAR},
             </if>
-            <if test="createByUser != null">
-                #{createByUser,jdbcType=VARCHAR},
+            <if test="creationByUser != null">
+                #{creationByUser,jdbcType=VARCHAR},
             </if>
-            <if test="createDate != null">
-                #{createDate,jdbcType=TIMESTAMP},
+            <if test="creationDate != null">
+                #{creationDate,jdbcType=TIMESTAMP},
             </if>
-            <if test="updateById != null">
-                #{updateById,jdbcType=VARCHAR},
+            <if test="lastUpdatedById != null">
+                #{lastUpdatedById,jdbcType=VARCHAR},
             </if>
-            <if test="updateByUser != null">
-                #{updateByUser,jdbcType=VARCHAR},
+            <if test="lastUpdatedByUser != null">
+                #{lastUpdatedByUser,jdbcType=VARCHAR},
             </if>
-            <if test="updateDate != null">
-                #{updateDate,jdbcType=TIMESTAMP},
+            <if test="lastUpdatedDate != null">
+                #{lastUpdatedDate,jdbcType=TIMESTAMP},
             </if>
         </trim>
     </insert>
-    <update id="updateByPrimaryKeySelective" parameterType="com.zs.aidata.gmcc.vo.BasUserSessionDO">
+    <update id="updateByPrimaryKeySelective" parameterType="com.zs.aidata.cmcc.gmcc.vo.BasUserSessionDO">
         update t_bas_user_session
         <set>
             <if test="phone != null">
@@ -106,37 +107,37 @@
             <if test="sessionId != null">
                 session_id = #{sessionId,jdbcType=VARCHAR},
             </if>
-            <if test="createById != null">
-                create_by_id = #{createById,jdbcType=VARCHAR},
+            <if test="creationById != null">
+                creation_by_id = #{creationById,jdbcType=VARCHAR},
             </if>
-            <if test="createByUser != null">
-                create_by_user = #{createByUser,jdbcType=VARCHAR},
+            <if test="creationByUser != null">
+                creation_by_user = #{creationByUser,jdbcType=VARCHAR},
             </if>
-            <if test="createDate != null">
-                create_date = #{createDate,jdbcType=TIMESTAMP},
+            <if test="creationDate != null">
+                creation_date = #{creationDate,jdbcType=TIMESTAMP},
             </if>
-            <if test="updateById != null">
-                update_by_id = #{updateById,jdbcType=VARCHAR},
+            <if test="lastUpdatedById != null">
+                last_updated_by_id = #{lastUpdatedById,jdbcType=VARCHAR},
             </if>
-            <if test="updateByUser != null">
-                update_by_user = #{updateByUser,jdbcType=VARCHAR},
+            <if test="lastUpdatedByUser != null">
+                last_updated_by_user = #{lastUpdatedByUser,jdbcType=VARCHAR},
             </if>
-            <if test="updateDate != null">
-                update_date = #{updateDate,jdbcType=TIMESTAMP},
+            <if test="lastUpdatedDate != null">
+                last_updated_date = #{lastUpdatedDate,jdbcType=TIMESTAMP},
             </if>
         </set>
         where p_id = #{pId,jdbcType=INTEGER}
     </update>
-    <update id="updateByPrimaryKey" parameterType="com.zs.aidata.gmcc.vo.BasUserSessionDO">
+    <update id="updateByPrimaryKey" parameterType="com.zs.aidata.cmcc.gmcc.vo.BasUserSessionDO">
         update t_bas_user_session
         set phone = #{phone,jdbcType=VARCHAR},
         session_id = #{sessionId,jdbcType=VARCHAR},
-        create_by_id = #{createById,jdbcType=VARCHAR},
-        create_by_user = #{createByUser,jdbcType=VARCHAR},
-        create_date = #{createDate,jdbcType=TIMESTAMP},
-        update_by_id = #{updateById,jdbcType=VARCHAR},
-        update_by_user = #{updateByUser,jdbcType=VARCHAR},
-        update_date = #{updateDate,jdbcType=TIMESTAMP}
+        creation_by_id = #{creationById,jdbcType=VARCHAR},
+        creation_by_user = #{creationByUser,jdbcType=VARCHAR},
+        creation_date = #{creationDate,jdbcType=TIMESTAMP},
+        last_updated_by_id = #{lastUpdatedById,jdbcType=VARCHAR},
+        last_updated_by_user = #{lastUpdatedByUser,jdbcType=VARCHAR},
+        last_updated_date = #{lastUpdatedDate,jdbcType=TIMESTAMP}
         where p_id = #{pId,jdbcType=INTEGER}
     </update>
     <select id="selectList" resultMap="BaseResultMap">

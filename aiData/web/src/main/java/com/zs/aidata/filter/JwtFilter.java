@@ -2,11 +2,10 @@ package com.zs.aidata.filter;
 
 import com.auth0.jwt.interfaces.Claim;
 import com.auth0.jwt.interfaces.DecodedJWT;
-import com.zs.aidata.tools.Constans;
-import com.zs.aidata.tools.JwtUtil;
-import com.zs.aidata.tools.ValueUtils;
+import com.zs.aidata.core.tools.Constans;
+import com.zs.aidata.core.tools.JwtUtil;
+import com.zs.aidata.core.tools.ValueUtils;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.catalina.connector.Request;
 import org.apache.catalina.connector.RequestFacade;
 
 import javax.servlet.*;
