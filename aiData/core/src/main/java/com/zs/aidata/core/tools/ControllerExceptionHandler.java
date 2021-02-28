@@ -20,12 +20,12 @@ import java.util.Map;
 public class ControllerExceptionHandler {
 
     //这个注解是指当controller中抛出这个指定的异常类的时候，都会转到这个方法中来处理异常
-    @ExceptionHandler(AiDataApplication.class)
+    @ExceptionHandler(Exception.class)
     //将返回的值转成json格式的数据
     @ResponseBody
     //返回的状态码
     @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)     //服务内部错误
-    public Map<String, Object> handlerUserNotExistException(AiDataApplication ex) {
+    public Map<String, Object> handlerException(Exception ex) {
         Map<String, Object> result = new HashMap<>();
         result.put("error", "Internal Server Error");
         result.put("message", ex.getMessage());
@@ -34,4 +34,6 @@ public class ControllerExceptionHandler {
         result.put("timestamp", new Date());
         return result;
     }
+
+
 }

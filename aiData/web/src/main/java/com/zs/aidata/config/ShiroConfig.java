@@ -1,9 +1,14 @@
 package com.zs.aidata.config;
 
+import cn.hutool.core.codec.Base64;
+import com.zs.aidata.filter.CORSAuthenticationFilter;
+import com.zs.aidata.otherconfig.CustomSessionManager;
 import com.zs.aidata.realm.MyRealm;
-import org.apache.shiro.authz.annotation.RequiresRoles;
-import org.apache.shiro.authz.annotation.RequiresUser;
+import org.apache.shiro.cache.CacheManager;
+import org.apache.shiro.cache.MemoryConstrainedCacheManager;
 import org.apache.shiro.realm.Realm;
+import org.apache.shiro.session.mgt.SessionManager;
+import org.apache.shiro.spring.LifecycleBeanPostProcessor;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.CookieRememberMeManager;
@@ -14,7 +19,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.apache.shiro.mgt.SecurityManager;
 
+import javax.servlet.Filter;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
@@ -32,11 +39,51 @@ public class ShiroConfig {
      * @return
      */
     @Bean
-    public SecurityManager securityManager(Realm myRealm) {
+    public SecurityManager securityManager(Realm myRealm, SessionManager sessionManager) {
         DefaultWebSecurityManager webSecurityManager = new DefaultWebSecurityManager();
         webSecurityManager.setRealm(myRealm);
+        //自定义session管理
+        webSecurityManager.setSessionManager(sessionManager);
         return webSecurityManager;
     }
+
+    @Bean
+    public CacheManager cacheManager() {
+        return new MemoryConstrainedCacheManager();
+    }
+
+    /**
+     * cookie对象;
+     * rememberMeCookie()方法是设置Cookie的生成模版，比如cookie的name，cookie的有效时间等等。
+     *
+     * @return
+     */
+    @Bean
+    public SimpleCookie rememberMeCookie() {
+        //System.out.println("ShiroConfiguration.rememberMeCookie()");
+        //这个参数是cookie的名称，对应前端的checkbox的name = rememberMe
+        SimpleCookie simpleCookie = new SimpleCookie("rememberMe");
+        //<!-- 记住我cookie生效时间30天 ,单位秒;-->
+        simpleCookie.setMaxAge(259200);
+        return simpleCookie;
+    }
+
+    /**
+     * cookie管理对象;
+     * rememberMeManager()方法是生成rememberMe管理器，而且要将这个rememberMe管理器设置到securityManager中
+     *
+     * @return
+     */
+    @Bean
+    public CookieRememberMeManager rememberMeManager() {
+        //System.out.println("ShiroConfiguration.rememberMeManager()");
+        CookieRememberMeManager cookieRememberMeManager = new CookieRememberMeManager();
+        cookieRememberMeManager.setCookie(rememberMeCookie());
+        //rememberMe cookie加密的密钥 建议每个项目都不一样 默认AES算法 密钥长度(128 256 512 位)
+        cookieRememberMeManager.setCipherKey(Base64.decode("2AvVhdsgUs0FSA3SDFAdag=="));
+        return cookieRememberMeManager;
+    }
+
 
     /**
      * 配置一个自定义对的realm的bean，最终将使用这个bean返回哦对象来完成认证和授权
@@ -47,6 +94,10 @@ public class ShiroConfig {
     public MyRealm myRealm() {
         MyRealm myRealm = new MyRealm();
         return myRealm;
+    }
+
+    public CORSAuthenticationFilter corsAuthenticationFilter() {
+        return new CORSAuthenticationFilter();
     }
 
     /**
@@ -74,11 +125,25 @@ public class ShiroConfig {
         // admin开头的请求需要登录认证
 //        filterChainMap.put("/admin/**", "authc");
         // 配置剩余请求必须全部需要进行登录认证，注意这个必须写在最后
-//        filterChainMap.put("/**", "authc");
+//        filterChainMap.put("/**", "corsAuthenticationFilter");
+        //自定义过滤器
+        Map<String, Filter> filterMap = new LinkedHashMap<>();
+//        filterMap.put("corsAuthenticationFilter", corsAuthenticationFilter());
+        shiroFilterFactoryBean.setFilters(filterMap);
 
         // 设置权限拦截规则
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainMap);
         return shiroFilterFactoryBean;
+    }
+
+    /**
+     * Shiro生命周期处理器
+     *
+     * @return
+     */
+    @Bean
+    public LifecycleBeanPostProcessor lifecycleBeanPostProcessor() {
+        return new LifecycleBeanPostProcessor();
     }
 
     /**
@@ -111,24 +176,21 @@ public class ShiroConfig {
     }
 
     /**
-     * 设置cookie
-     *
-     * @return
+     * 采用 DefaultWebSessionManager 替代掉容器内置的 Session 实现。
      */
     @Bean
-    public SimpleCookie simpleCookie() {
-        SimpleCookie simpleCookie = new SimpleCookie();
-        // 设置只有http请求才能使用cookie
-//        simpleCookie.setHttpOnly(true);
-        // 失效时间，单位是秒  24小时
-        simpleCookie.setMaxAge(60 * 60 * 24);
-        return simpleCookie;
+    public SessionManager sessionManager() {
+        CustomSessionManager sessionManager = new CustomSessionManager();
+        //配置监听
+//        sessionManager.setSessionIdCookie(simpleCookie);
+        // 设置 sessionDAO
+//        sessionManager.setSessionDAO(sessionDAO());
+        // 配置 session
+        sessionManager.setDeleteInvalidSessions(true);
+        sessionManager.setSessionValidationSchedulerEnabled(true);
+        // 10 分钟检查一遍失效 session
+        sessionManager.setSessionValidationInterval(10 * 60 * 1000);
+        return sessionManager;
     }
 
-    @Bean
-    public CookieRememberMeManager cookieRememberMeManager(SimpleCookie simpleCookie) {
-        CookieRememberMeManager cookieRememberMeManager = new CookieRememberMeManager();
-        cookieRememberMeManager.setCookie(simpleCookie);
-        return cookieRememberMeManager;
-    }
 }

@@ -14,6 +14,8 @@ public class AuthVO {
     // 提示消息
     private String message;
 
+    // shiro的sessionid
+    private String sessionId;
 
     public AuthVO(String message) {
         this.message = message;

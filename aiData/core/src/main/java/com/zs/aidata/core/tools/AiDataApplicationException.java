@@ -8,7 +8,7 @@ import java.text.MessageFormat;
  * @author 张顺
  * @since 2020/10/18
  */
-public class AiDataApplication extends RuntimeException {
+public class AiDataApplicationException extends RuntimeException {
 
     private String message;
 
@@ -19,7 +19,7 @@ public class AiDataApplication extends RuntimeException {
      * @param modelMessage
      * @param keyWords
      */
-    public AiDataApplication(String modelMessage, String... keyWords) {
+    public AiDataApplicationException(String modelMessage, String... keyWords) {
         for (int i = 0; i < keyWords.length; i++) {
             modelMessage = modelMessage.replace("{" + i + "}", keyWords[i]);
         }
@@ -28,7 +28,7 @@ public class AiDataApplication extends RuntimeException {
     }
 
 
-    public AiDataApplication(String msg) {
+    public AiDataApplicationException(String msg) {
         super(msg);
         message = msg;
     }

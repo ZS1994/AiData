@@ -6,6 +6,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
+ * 过滤器总配置，所有的过滤器需要在这里进行添加
+ *
  * @author 张顺
  * @since 2020/11/1
  */

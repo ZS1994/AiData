@@ -66,11 +66,11 @@ public class ValueUtils {
      */
     public static void checkNotEmpty(Object obj, String... fieldNames) throws Exception {
         if (isEmpty(obj)) {
-            throw new AiDataApplication("对象为空");
+            throw new AiDataApplicationException("对象为空");
         }
         for (String field : fieldNames) {
             if (isEmpty(getFieldValue(obj, field))) {
-                throw new AiDataApplication("属性{0}值不能为空", field);
+                throw new AiDataApplicationException("属性{0}值不能为空", field);
             }
         }
     }
@@ -93,7 +93,7 @@ public class ValueUtils {
                 }
             }
             if (isEmpty(field)) {
-                throw new AiDataApplication("找不到{0}字段", fieldName);
+                throw new AiDataApplicationException("找不到{0}字段", fieldName);
             }
             // 拿到该属性的gettet方法
             /**

@@ -1,6 +1,6 @@
 package com.zs.aidata.core.sys.login.controller;
 
-import com.zs.aidata.core.tools.AiDataApplication;
+import com.zs.aidata.core.tools.AiDataApplicationException;
 import com.zs.aidata.core.sys.login.vo.AuthVO;
 import com.zs.aidata.core.sys.login.vo.LoginInputVO;
 import io.swagger.annotations.Api;
@@ -8,7 +8,6 @@ import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
-import org.apache.shiro.authz.annotation.RequiresGuest;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.subject.Subject;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -31,17 +30,17 @@ public class LoginController {
     /**
      * @param inputVO
      * @return
-     * @throws AiDataApplication
+     * @throws AiDataApplicationException
      * @RequiresRoles()是shiro提供的，用于标记当前类获取当前方法访问时，必须需要哪些角色 value 为一个或多个角色
      * logical and 或者是 or 。 默认是 AND，表示当前用户必须同时拥有多个角色
      */
     @PostMapping("login")
     @ApiOperation(value = "执行登录验证", notes = "执行登录验证")
-    public AuthVO login(LoginInputVO inputVO) throws AiDataApplication {
+    public AuthVO login(LoginInputVO inputVO) throws AiDataApplicationException {
         log.info(inputVO.toString());
         // 获取权限操作对象，利用这个对象来完成登录操作
         Subject subject = SecurityUtils.getSubject();
-
+        subject.logout();
         // 是否是认证过的
 //        if (!subject.isAuthenticated()) {
         // 没有认证过
@@ -52,15 +51,15 @@ public class LoginController {
         try {
             subject.login(usernamePasswordToken);
         } catch (Exception e) {
-            throw new AiDataApplication(e.getMessage());
+            throw new AiDataApplicationException(e.getMessage());
         }
-//        }
-        return new AuthVO("认证成功");
+        AuthVO out = new AuthVO("认证成功");
+        return out;
     }
 
     @PostMapping("logout")
     @ApiOperation(value = "登出", notes = "登出")
-    public AuthVO logout() throws AiDataApplication {
+    public AuthVO logout() throws AiDataApplicationException {
         Subject subject = SecurityUtils.getSubject();
         // 登出当前账号，清空当前账号的缓存，否则无法重新登录
         subject.logout();
