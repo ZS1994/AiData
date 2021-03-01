@@ -29,12 +29,12 @@ public class JwtFilter implements Filter {
     /**
      * 白名单
      */
-    List<String> WHITE_LIST = Arrays.asList("/aidata/core/sys/login/test");
+    List<String> WHITE_LIST = Arrays.asList("/aidata/core/loginController");
 
     /**
      * JWT的开关，N：关，其他:开
      */
-    String SWITCH_JWT = "N";
+    String SWITCH_JWT = "Y";
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {

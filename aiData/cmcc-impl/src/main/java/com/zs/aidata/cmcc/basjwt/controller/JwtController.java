@@ -24,8 +24,6 @@ import java.util.Map;
 @RequestMapping(value = "cmcc/jwtController", headers = "Accept=application/json", produces = "application/json;charset=UTF-8")
 public class JwtController extends BaseCoreService {
 
-    private JwtUtil jwtUtil = new JwtUtil();
-
     @Inject
     private IGmccAppService iGmccAppService;
 
@@ -36,7 +34,7 @@ public class JwtController extends BaseCoreService {
         String sessionid = iGmccAppService.sessionidRequest(null);
         Map<String, String> map = new HashMap<>();
         map.put(Constans.KEY_GMCC_SESSION_ID, sessionid);
-        String token = jwtUtil.createToken(map);
+        String token = JwtUtil.createToken(map);
         JwtVO out = new JwtVO();
         out.setToken(token);
         return out;

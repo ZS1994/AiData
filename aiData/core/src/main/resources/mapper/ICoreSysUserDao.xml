@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zs.aidata.core.sys.user.dao.ICoreSysUserDao">
+    <resultMap id="BaseResultMap" type="com.zs.aidata.core.sys.user.vo.CoreSysUserDO">
+        <id column="p_id" jdbcType="INTEGER" property="pId"/>
+        <result column="app_id" jdbcType="VARCHAR" property="appId"/>
+        <result column="user_number" jdbcType="VARCHAR" property="userNumber"/>
+        <result column="user_password" jdbcType="VARCHAR" property="userPassword"/>
+        <result column="user_name" jdbcType="VARCHAR" property="userName"/>
+        <result column="mail" jdbcType="VARCHAR" property="mail"/>
+        <result column="phone" jdbcType="VARCHAR" property="phone"/>
+        <result column="delete_flag" jdbcType="VARCHAR" property="deleteFlag"/>
+        <result column="rids" jdbcType="VARCHAR" property="rids"/>
+        <result column="img" jdbcType="VARCHAR" property="img"/>
+        <result column="creation_by_id" jdbcType="VARCHAR" property="creationById"/>
+        <result column="creation_by_user" jdbcType="VARCHAR" property="creationByUser"/>
+        <result column="creation_date" jdbcType="TIMESTAMP" property="creationDate"/>
+        <result column="last_updated_by_id" jdbcType="VARCHAR" property="lastUpdatedById"/>
+        <result column="last_updated_by_user" jdbcType="VARCHAR" property="lastUpdatedByUser"/>
+        <result column="last_updated_date" jdbcType="TIMESTAMP" property="lastUpdatedDate"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        p_id, app_id, user_number, user_password, user_name, mail, phone, delete_flag, rids,
+        img, creation_by_id, creation_by_user, creation_date, last_updated_by_id, last_updated_by_user,
+        last_updated_date
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_core_sys_user
+        where p_id = #{pId,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete from t_core_sys_user
+        where p_id = #{pId,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="com.zs.aidata.core.sys.user.vo.CoreSysUserDO">
+        insert into t_core_sys_user (p_id, app_id, user_number,
+        user_password, user_name, mail,
+        phone, delete_flag, rids,
+        img, creation_by_id, creation_by_user,
+        creation_date, last_updated_by_id, last_updated_by_user,
+        last_updated_date)
+        values (#{pId,jdbcType=INTEGER}, #{appId,jdbcType=VARCHAR}, #{userNumber,jdbcType=VARCHAR},
+        #{userPassword,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}, #{mail,jdbcType=VARCHAR},
+        #{phone,jdbcType=VARCHAR}, #{deleteFlag,jdbcType=VARCHAR}, #{rids,jdbcType=VARCHAR},
+        #{img,jdbcType=VARCHAR}, #{creationById,jdbcType=VARCHAR}, #{creationByUser,jdbcType=VARCHAR},
+        #{creationDate,jdbcType=TIMESTAMP}, #{lastUpdatedById,jdbcType=VARCHAR}, #{lastUpdatedByUser,jdbcType=VARCHAR},
+        #{lastUpdatedDate,jdbcType=TIMESTAMP})
+    </insert>
+    <insert id="insertSelective" parameterType="com.zs.aidata.core.sys.user.vo.CoreSysUserDO">
+        insert into t_core_sys_user
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="pId != null">
+                p_id,
+            </if>
+            <if test="appId != null">
+                app_id,
+            </if>
+            <if test="userNumber != null">
+                user_number,
+            </if>
+            <if test="userPassword != null">
+                user_password,
+            </if>
+            <if test="userName != null">
+                user_name,
+            </if>
+            <if test="mail != null">
+                mail,
+            </if>
+            <if test="phone != null">
+                phone,
+            </if>
+            <if test="deleteFlag != null">
+                delete_flag,
+            </if>
+            <if test="rids != null">
+                rids,
+            </if>
+            <if test="img != null">
+                img,
+            </if>
+            <if test="creationById != null">
+                creation_by_id,
+            </if>
+            <if test="creationByUser != null">
+                creation_by_user,
+            </if>
+            <if test="creationDate != null">
+                creation_date,
+            </if>
+            <if test="lastUpdatedById != null">
+                last_updated_by_id,
+            </if>
+            <if test="lastUpdatedByUser != null">
+                last_updated_by_user,
+            </if>
+            <if test="lastUpdatedDate != null">
+                last_updated_date,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="pId != null">
+                #{pId,jdbcType=INTEGER},
+            </if>
+            <if test="appId != null">
+                #{appId,jdbcType=VARCHAR},
+            </if>
+            <if test="userNumber != null">
+                #{userNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="userPassword != null">
+                #{userPassword,jdbcType=VARCHAR},
+            </if>
+            <if test="userName != null">
+                #{userName,jdbcType=VARCHAR},
+            </if>
+            <if test="mail != null">
+                #{mail,jdbcType=VARCHAR},
+            </if>
+            <if test="phone != null">
+                #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="deleteFlag != null">
+                #{deleteFlag,jdbcType=VARCHAR},
+            </if>
+            <if test="rids != null">
+                #{rids,jdbcType=VARCHAR},
+            </if>
+            <if test="img != null">
+                #{img,jdbcType=VARCHAR},
+            </if>
+            <if test="creationById != null">
+                #{creationById,jdbcType=VARCHAR},
+            </if>
+            <if test="creationByUser != null">
+                #{creationByUser,jdbcType=VARCHAR},
+            </if>
+            <if test="creationDate != null">
+                #{creationDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="lastUpdatedById != null">
+                #{lastUpdatedById,jdbcType=VARCHAR},
+            </if>
+            <if test="lastUpdatedByUser != null">
+                #{lastUpdatedByUser,jdbcType=VARCHAR},
+            </if>
+            <if test="lastUpdatedDate != null">
+                #{lastUpdatedDate,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.zs.aidata.core.sys.user.vo.CoreSysUserDO">
+        update t_core_sys_user
+        <set>
+            <if test="appId != null">
+                app_id = #{appId,jdbcType=VARCHAR},
+            </if>
+            <if test="userNumber != null">
+                user_number = #{userNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="userPassword != null">
+                user_password = #{userPassword,jdbcType=VARCHAR},
+            </if>
+            <if test="userName != null">
+                user_name = #{userName,jdbcType=VARCHAR},
+            </if>
+            <if test="mail != null">
+                mail = #{mail,jdbcType=VARCHAR},
+            </if>
+            <if test="phone != null">
+                phone = #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="deleteFlag != null">
+                delete_flag = #{deleteFlag,jdbcType=VARCHAR},
+            </if>
+            <if test="rids != null">
+                rids = #{rids,jdbcType=VARCHAR},
+            </if>
+            <if test="img != null">
+                img = #{img,jdbcType=VARCHAR},
+            </if>
+            <if test="creationById != null">
+                creation_by_id = #{creationById,jdbcType=VARCHAR},
+            </if>
+            <if test="creationByUser != null">
+                creation_by_user = #{creationByUser,jdbcType=VARCHAR},
+            </if>
+            <if test="creationDate != null">
+                creation_date = #{creationDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="lastUpdatedById != null">
+                last_updated_by_id = #{lastUpdatedById,jdbcType=VARCHAR},
+            </if>
+            <if test="lastUpdatedByUser != null">
+                last_updated_by_user = #{lastUpdatedByUser,jdbcType=VARCHAR},
+            </if>
+            <if test="lastUpdatedDate != null">
+                last_updated_date = #{lastUpdatedDate,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where p_id = #{pId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.zs.aidata.core.sys.user.vo.CoreSysUserDO">
+        update t_core_sys_user
+        set app_id = #{appId,jdbcType=VARCHAR},
+        user_number = #{userNumber,jdbcType=VARCHAR},
+        user_password = #{userPassword,jdbcType=VARCHAR},
+        user_name = #{userName,jdbcType=VARCHAR},
+        mail = #{mail,jdbcType=VARCHAR},
+        phone = #{phone,jdbcType=VARCHAR},
+        delete_flag = #{deleteFlag,jdbcType=VARCHAR},
+        rids = #{rids,jdbcType=VARCHAR},
+        img = #{img,jdbcType=VARCHAR},
+        creation_by_id = #{creationById,jdbcType=VARCHAR},
+        creation_by_user = #{creationByUser,jdbcType=VARCHAR},
+        creation_date = #{creationDate,jdbcType=TIMESTAMP},
+        last_updated_by_id = #{lastUpdatedById,jdbcType=VARCHAR},
+        last_updated_by_user = #{lastUpdatedByUser,jdbcType=VARCHAR},
+        last_updated_date = #{lastUpdatedDate,jdbcType=TIMESTAMP}
+        where p_id = #{pId,jdbcType=INTEGER}
+    </update>
+    <select id="selectByUserNumber" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_core_sys_user
+        where
+        app_id = #{appId,jdbcType=VARCHAR}
+        and user_number = #{userNumber,jdbcType=VARCHAR}
+    </select>
+</mapper>

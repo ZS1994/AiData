@@ -30,7 +30,7 @@ import java.util.Map;
  * @author 张顺
  * @since 2021/2/18
  */
-@Configuration
+//@Configuration
 public class ShiroConfig {
 
     /**

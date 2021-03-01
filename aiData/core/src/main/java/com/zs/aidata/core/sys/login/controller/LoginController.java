@@ -1,8 +1,11 @@
 package com.zs.aidata.core.sys.login.controller;
 
+import com.zs.aidata.core.sys.login.service.ILoginService;
 import com.zs.aidata.core.tools.AiDataApplicationException;
 import com.zs.aidata.core.sys.login.vo.AuthVO;
 import com.zs.aidata.core.sys.login.vo.LoginInputVO;
+import com.zs.aidata.core.tools.BaseCoreService;
+import com.zs.aidata.core.tools.Constans;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -13,6 +16,10 @@ import org.apache.shiro.subject.Subject;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.inject.Inject;
+import java.util.HashMap;
+import java.util.Map;
 
 
 /**
@@ -25,7 +32,10 @@ import org.springframework.web.bind.annotation.RestController;
 @Api(tags = {"登录认证"})
 @RestController
 @RequestMapping(value = "core/loginController", headers = "Accept=application/json", produces = "application/json;charset=UTF-8")
-public class LoginController {
+public class LoginController extends BaseCoreService {
+
+    @Inject
+    private ILoginService iLoginService;
 
     /**
      * @param inputVO
@@ -37,24 +47,7 @@ public class LoginController {
     @PostMapping("login")
     @ApiOperation(value = "执行登录验证", notes = "执行登录验证")
     public AuthVO login(LoginInputVO inputVO) throws AiDataApplicationException {
-        log.info(inputVO.toString());
-        // 获取权限操作对象，利用这个对象来完成登录操作
-        Subject subject = SecurityUtils.getSubject();
-        subject.logout();
-        // 是否是认证过的
-//        if (!subject.isAuthenticated()) {
-        // 没有认证过
-        // 创建用户认证时的身份令牌，并设置我们从页面中传递账号和密码
-        UsernamePasswordToken usernamePasswordToken = new UsernamePasswordToken(inputVO.getUsername(), inputVO.getPassword());
-        usernamePasswordToken.setRememberMe(true);
-        // 执行用户登录，会自动调用realm对象中的认证方法，如果登录失败会抛出相应的异常
-        try {
-            subject.login(usernamePasswordToken);
-        } catch (Exception e) {
-            throw new AiDataApplicationException(e.getMessage());
-        }
-        AuthVO out = new AuthVO("认证成功");
-        return out;
+        return iLoginService.login(inputVO);
     }
 
     @PostMapping("logout")
