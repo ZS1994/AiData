@@ -16,7 +16,7 @@
         <result column="last_updated_date" jdbcType="TIMESTAMP" property="lastUpdatedDate"/>
     </resultMap>
     <sql id="Base_Column_List">
-        p_id, app_id, perm_name, perm_url, perm_method, perm_code,  creation_by_id, creation_by_user,
+        p_id, app_id, perm_name, perm_url, perm_method, perm_code, creation_by_id, creation_by_user,
         creation_date, last_updated_by_id, last_updated_by_user, last_updated_date
     </sql>
     <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
@@ -176,18 +176,18 @@
         where p_id = #{pId,jdbcType=INTEGER}
     </update>
 
-    <select id="selectListByPermIdList" resultMap="BaseResultMap">
+    <select id="selectListByPermCodeList" resultMap="BaseResultMap">
         select
-            app_id, perm_name, perm_url, perm_method, perm_code
+        app_id, perm_name, perm_url, perm_method, perm_code
         from t_core_sys_permission
         where
         app_id = #{appId,jdbcType=VARCHAR}
-        <if test="permIdList != null and permIdList.size > 0">
-            <foreach collection="permIdList" item="pid" open="and p_id in(" close=")" separator=",">
-                #{pid,jdbcType=INTEGER}
+        <if test="permCodeList != null and permCodeList.size > 0">
+            <foreach collection="permCodeList" item="permCode" open="and perm_code in(" close=")" separator=",">
+                #{permCode,jdbcType=INTEGER}
             </foreach>
         </if>
-        <if test="permIdList == null or permIdList.size == 0">
+        <if test="permCodeList == null or permCodeList.size == 0">
             <!--没让它一也-->
             and 1=2
         </if>
@@ -199,5 +199,28 @@
         from t_core_sys_permission
         where
         app_id = #{appId,jdbcType=VARCHAR}
+    </select>
+
+    <select id="selectListByRoleCodeList" resultMap="BaseResultMap">
+        select
+        app_id, perm_name, perm_url, perm_method, perm_code
+        from t_core_sys_permission
+        where
+        app_id = #{appId,jdbcType=VARCHAR}
+        <if test="roleCodeList != null and roleCodeList.size > 0">
+            and perm_code in (
+                select perm_code from t_core_sys_role_permission_rel
+                where
+                app_id = t_core_sys_permission.app_id
+                and role_code in
+                <foreach collection="roleCodeList" item="roleCode" open="(" close=")" separator=",">
+                    #{roleCode,jdbcType=INTEGER}
+                </foreach>
+            )
+        </if>
+        <if test="roleCodeList == null or roleCodeList.size == 0">
+            <!--没让它一也-->
+            and 1=2
+        </if>
     </select>
 </mapper>

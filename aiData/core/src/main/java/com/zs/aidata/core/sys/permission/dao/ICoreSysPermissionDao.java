@@ -22,12 +22,21 @@ public interface ICoreSysPermissionDao extends BaseCoreDao<CoreSysPermissionDO> 
     int updateByPrimaryKey(CoreSysPermissionDO record);
 
     /**
-     * 通过permIdList来查权限
+     * 通过permCodeList来查权限
      *
      * @param appId
-     * @param permIdList
+     * @param permCodeList
      * @return
      */
-    List<CoreSysPermissionDO> selectListByPermIdList(@Param("appId") String appId, @Param("permIdList") List<String> permIdList);
+    List<CoreSysPermissionDO> selectListByPermCodeList(@Param("appId") String appId, @Param("permCodeList") List<String> permCodeList);
+
+    /**
+     * 通过角色来查权限
+     * @param appId
+     * @param roleCodeList
+     * @return
+     */
+    List<CoreSysPermissionDO> selectListByRoleCodeList(@Param("appId") String appId, @Param("roleCodeList") List<String> roleCodeList);
+
 
 }
