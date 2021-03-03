@@ -14,7 +14,10 @@ import java.util.List;
 @Data
 public class CoreSysUpdatePermissionInVO extends BaseEntityVO {
 
-    List<CoreSysPermissionDO> coreSysPermissionDOList;
+    /**
+     *
+     */
+    String coreSysPermissionDOListJsonArr;
 
 
 }

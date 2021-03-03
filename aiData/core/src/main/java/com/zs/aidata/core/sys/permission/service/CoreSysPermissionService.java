@@ -1,5 +1,6 @@
 package com.zs.aidata.core.sys.permission.service;
 
+import com.alibaba.fastjson.JSONArray;
 import com.zs.aidata.core.sys.permission.dao.ICoreSysPermissionDao;
 import com.zs.aidata.core.sys.permission.vo.CoreSysPermissionDO;
 import com.zs.aidata.core.sys.permission.vo.CoreSysUpdatePermissionInVO;
@@ -11,6 +12,8 @@ import com.zs.aidata.core.sys.user.vo.CoreSysUserDO;
 import com.zs.aidata.core.sys.user.vo.CoreSysUserRoleRelDO;
 import com.zs.aidata.core.tools.AiDataApplicationException;
 import com.zs.aidata.core.tools.BaseCoreService;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -59,14 +62,76 @@ public class CoreSysPermissionService extends BaseCoreService implements ICoreSy
         return permissionList;
     }
 
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     @Override
     public void updateAllPermissionByAuto(CoreSysUpdatePermissionInVO inVO) throws AiDataApplicationException {
-        checkNotEmpty(inVO, "appId", "coreSysPermissionDOList");
+        checkNotEmpty(inVO, "appId", "coreSysPermissionDOListJsonArr");
         // 查一下当前app下的所有权限
         CoreSysPermissionDO queryDO = new CoreSysPermissionDO();
         queryDO.setAppId(inVO.getAppId());
         List<CoreSysPermissionDO> oldPermissionList = iCoreSysPermissionDao.selectList(queryDO);
 
+        // 这个app的新权限
+        List<CoreSysPermissionDO> newPermissionList = JSONArray.parseArray(inVO.getCoreSysPermissionDOListJsonArr(), CoreSysPermissionDO.class);
 
+        // 找一下
+        List<CoreSysPermissionDO> insertNewPermList = new ArrayList<>();
+        List<CoreSysPermissionDO> updateNewPermList = new ArrayList<>();
+        for (CoreSysPermissionDO newPermTmp : newPermissionList) {
+            // 是否已经存在
+            boolean isExist = false;
+            // 是否已经存在，但是其他信息变了
+            boolean isExistButUpdate = false;
+            for (CoreSysPermissionDO oldPermTmp : oldPermissionList) {
+                if (newPermTmp.getPermCode().equals(oldPermTmp.getPermCode())) {
+                    isExist = true;
+                    if (!newPermTmp.getPermMethod().equals(oldPermTmp.getPermMethod())
+                            || !newPermTmp.getPermName().equals(oldPermTmp.getPermName())
+                            || !newPermTmp.getPermUrl().equals(oldPermTmp.getPermUrl())
+                    ) {
+                        isExistButUpdate = true;
+                        oldPermTmp.setPermMethod(newPermTmp.getPermMethod());
+                        oldPermTmp.setPermName(newPermTmp.getPermName());
+                        oldPermTmp.setPermUrl(newPermTmp.getPermUrl());
+                        newPermTmp = oldPermTmp;
+                    }
+                    break;
+                }
+            }
+            if (isExist == false) {
+                initBaseFieldByCreate(newPermTmp);
+                insertNewPermList.add(newPermTmp);
+            } else if (isExist == true && isExistButUpdate == true) {
+                updateNewPermList.add(newPermTmp);
+            }
+        }
+        // 执行批量更新和批量插入
+        iCoreSysPermissionDao.createOnceGo(insertNewPermList);
+        iCoreSysPermissionDao.updateOnceGo(updateNewPermList);
+
+        // 找出哪些是删除的权限
+        List<CoreSysPermissionDO> deleteOldPermList = new ArrayList<>();
+        // 此时要再查一遍
+        oldPermissionList = iCoreSysPermissionDao.selectList(queryDO);
+        for (CoreSysPermissionDO oldPermTmp : oldPermissionList) {
+            // 是否已经存在
+            boolean isExist = false;
+            for (CoreSysPermissionDO newPermTmp : newPermissionList) {
+                if (newPermTmp.getPermCode().equals(oldPermTmp.getPermCode())) {
+                    isExist = true;
+                }
+            }
+            if (isExist == false) {
+                deleteOldPermList.add(oldPermTmp);
+            }
+        }
+        iCoreSysPermissionDao.deleteOnceGo(deleteOldPermList);
+
+        // 清理不存在的 角色-权限 关系
+        List<String> deleteOldPermCodeList = deleteOldPermList
+                .stream().map(CoreSysPermissionDO::getPermCode)
+                .collect(Collectors.toList());
+
+        iCoreSysRolePermissionRelDao.deleteByPermCodeList(inVO.getAppId(), deleteOldPermCodeList);
     }
 }

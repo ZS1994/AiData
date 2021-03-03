@@ -28,11 +28,11 @@
         where p_id = #{pId,jdbcType=INTEGER}
     </delete>
     <insert id="insert" parameterType="com.zs.aidata.core.sys.role.vo.CoreSysRoleDO">
-        insert into t_core_sys_role (p_id, app_id, role_name,
+        insert into t_core_sys_role ( app_id, role_name,
         role_desc, creation_by_id,
         creation_by_user, creation_date, last_updated_by_id,
         last_updated_by_user, last_updated_date)
-        values (#{pId,jdbcType=INTEGER}, #{appId,jdbcType=VARCHAR}, #{roleName,jdbcType=VARCHAR},
+        values (#{appId,jdbcType=VARCHAR}, #{roleName,jdbcType=VARCHAR},
         #{roleDesc,jdbcType=VARCHAR}, #{creationById,jdbcType=VARCHAR},
         #{creationByUser,jdbcType=VARCHAR}, #{creationDate,jdbcType=TIMESTAMP}, #{lastUpdatedById,jdbcType=VARCHAR},
         #{lastUpdatedByUser,jdbcType=VARCHAR}, #{lastUpdatedDate,jdbcType=TIMESTAMP})

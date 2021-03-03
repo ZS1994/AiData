@@ -30,12 +30,12 @@
         where p_id = #{pId,jdbcType=INTEGER}
     </delete>
     <insert id="insert" parameterType="com.zs.aidata.core.sys.permission.vo.CoreSysPermissionDO">
-        insert into t_core_sys_permission (p_id, app_id, perm_name,
+        insert into t_core_sys_permission ( app_id, perm_name,
         perm_url, perm_method, perm_code,
         creation_by_id, creation_by_user, creation_date,
         last_updated_by_id, last_updated_by_user, last_updated_date
         )
-        values (#{pId,jdbcType=INTEGER}, #{appId,jdbcType=VARCHAR}, #{permName,jdbcType=VARCHAR},
+        values (#{appId,jdbcType=VARCHAR}, #{permName,jdbcType=VARCHAR},
         #{permUrl,jdbcType=VARCHAR}, #{permMethod,jdbcType=VARCHAR}, #{permCode,jdbcType=VARCHAR},
         #{creationById,jdbcType=VARCHAR}, #{creationByUser,jdbcType=VARCHAR}, #{creationDate,jdbcType=TIMESTAMP},
         #{lastUpdatedById,jdbcType=VARCHAR}, #{lastUpdatedByUser,jdbcType=VARCHAR},
@@ -198,7 +198,7 @@
         <include refid="Base_Column_List"/>
         from t_core_sys_permission
         where
-        app_id = #{appId,jdbcType=VARCHAR}
+        app_id = #{v.appId,jdbcType=VARCHAR}
     </select>
 
     <select id="selectListByRoleCodeList" resultMap="BaseResultMap">
@@ -214,7 +214,7 @@
                 app_id = t_core_sys_permission.app_id
                 and role_code in
                 <foreach collection="roleCodeList" item="roleCode" open="(" close=")" separator=",">
-                    #{roleCode,jdbcType=INTEGER}
+                    #{roleCode,jdbcType=VARCHAR}
                 </foreach>
             )
         </if>
@@ -223,4 +223,47 @@
             and 1=2
         </if>
     </select>
+
+    <delete id="deleteOnce">
+        delete from t_core_sys_permission
+        where
+        p_id in
+        <foreach collection="list" item="v" open="(" close=")" separator=",">
+            #{v.pId,jdbcType=INTEGER}
+        </foreach>
+    </delete>
+
+    <insert id="createOnce">
+        insert into t_core_sys_permission ( app_id, perm_name,
+        perm_url, perm_method, perm_code,
+        creation_by_id, creation_by_user, creation_date,
+        last_updated_by_id, last_updated_by_user, last_updated_date)
+        values
+        <foreach collection="list" item="v" open="" close="" separator=",">
+            (#{v.appId,jdbcType=VARCHAR}, #{v.permName,jdbcType=VARCHAR},
+            #{v.permUrl,jdbcType=VARCHAR}, #{v.permMethod,jdbcType=VARCHAR}, #{v.permCode,jdbcType=VARCHAR},
+            #{v.creationById,jdbcType=VARCHAR}, #{v.creationByUser,jdbcType=VARCHAR}, #{v.creationDate,jdbcType=TIMESTAMP},
+            #{v.lastUpdatedById,jdbcType=VARCHAR}, #{v.lastUpdatedByUser,jdbcType=VARCHAR},
+            #{v.lastUpdatedDate,jdbcType=TIMESTAMP})
+        </foreach>
+    </insert>
+    
+    <update id="updateOnce">
+        <foreach collection="list" item="v" open="" close="" separator=";">
+            update t_core_sys_permission
+            set app_id = #{v.appId,jdbcType=VARCHAR},
+            perm_name = #{v.permName,jdbcType=VARCHAR},
+            perm_url = #{v.permUrl,jdbcType=VARCHAR},
+            perm_method = #{v.permMethod,jdbcType=VARCHAR},
+            perm_code = #{v.permCode,jdbcType=VARCHAR},
+            creation_by_id = #{v.creationById,jdbcType=VARCHAR},
+            creation_by_user = #{v.creationByUser,jdbcType=VARCHAR},
+            creation_date = #{v.creationDate,jdbcType=TIMESTAMP},
+            last_updated_by_id = #{v.lastUpdatedById,jdbcType=VARCHAR},
+            last_updated_by_user = #{v.lastUpdatedByUser,jdbcType=VARCHAR},
+            last_updated_date = #{v.lastUpdatedDate,jdbcType=TIMESTAMP}
+            where p_id = #{v.pId,jdbcType=INTEGER}
+        </foreach>
+    </update>
+
 </mapper>

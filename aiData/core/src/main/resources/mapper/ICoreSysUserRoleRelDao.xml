@@ -3,7 +3,7 @@
 <mapper namespace="com.zs.aidata.core.sys.user.dao.ICoreSysUserRoleRelDao">
     <resultMap id="BaseResultMap" type="com.zs.aidata.core.sys.user.vo.CoreSysUserRoleRelDO">
         <id column="p_id" jdbcType="INTEGER" property="pId"/>
-        <result column="app_id" jdbcType="INTEGER" property="appId"/>
+        <result column="app_id" jdbcType="VARCHAR" property="appId"/>
         <result column="user_number" jdbcType="VARCHAR" property="userNumber"/>
         <result column="role_code" jdbcType="VARCHAR" property="roleCode"/>
         <result column="creation_by_id" jdbcType="VARCHAR" property="creationById"/>
@@ -27,17 +27,17 @@
         delete from t_core_sys_user_role_rel
         where p_id = #{pId,jdbcType=INTEGER}
     </delete>
-    <insert id="insert" parameterType="com.zs.aidata.core.sys.user.vo.CoreSysUserRoleRel">
-        insert into t_core_sys_user_role_rel (p_id, app_id, user_number,
+    <insert id="insert" parameterType="com.zs.aidata.core.sys.user.vo.CoreSysUserRoleRelDO">
+        insert into t_core_sys_user_role_rel ( app_id, user_number,
         role_code, creation_by_id, creation_by_user,
         creation_date, last_updated_by_id, last_updated_by_user,
         last_updated_date)
-        values (#{pId,jdbcType=INTEGER}, #{appId,jdbcType=INTEGER}, #{userNumber,jdbcType=VARCHAR},
+        values ( #{appId,jdbcType=VARCHAR}, #{userNumber,jdbcType=VARCHAR},
         #{roleCode,jdbcType=VARCHAR}, #{creationById,jdbcType=VARCHAR}, #{creationByUser,jdbcType=VARCHAR},
         #{creationDate,jdbcType=TIMESTAMP}, #{lastUpdatedById,jdbcType=VARCHAR}, #{lastUpdatedByUser,jdbcType=VARCHAR},
         #{lastUpdatedDate,jdbcType=TIMESTAMP})
     </insert>
-    <insert id="insertSelective" parameterType="com.zs.aidata.core.sys.user.vo.CoreSysUserRoleRel">
+    <insert id="insertSelective" parameterType="com.zs.aidata.core.sys.user.vo.CoreSysUserRoleRelDO">
         insert into t_core_sys_user_role_rel
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="pId != null">
@@ -76,7 +76,7 @@
                 #{pId,jdbcType=INTEGER},
             </if>
             <if test="appId != null">
-                #{appId,jdbcType=INTEGER},
+                #{appId,jdbcType=VARCHAR},
             </if>
             <if test="userNumber != null">
                 #{userNumber,jdbcType=VARCHAR},
@@ -104,11 +104,11 @@
             </if>
         </trim>
     </insert>
-    <update id="updateByPrimaryKeySelective" parameterType="com.zs.aidata.core.sys.user.vo.CoreSysUserRoleRel">
+    <update id="updateByPrimaryKeySelective" parameterType="com.zs.aidata.core.sys.user.vo.CoreSysUserRoleRelDO">
         update t_core_sys_user_role_rel
         <set>
             <if test="appId != null">
-                app_id = #{appId,jdbcType=INTEGER},
+                app_id = #{appId,jdbcType=VARCHAR},
             </if>
             <if test="userNumber != null">
                 user_number = #{userNumber,jdbcType=VARCHAR},
@@ -137,9 +137,9 @@
         </set>
         where p_id = #{pId,jdbcType=INTEGER}
     </update>
-    <update id="updateByPrimaryKey" parameterType="com.zs.aidata.core.sys.user.vo.CoreSysUserRoleRel">
+    <update id="updateByPrimaryKey" parameterType="com.zs.aidata.core.sys.user.vo.CoreSysUserRoleRelDO">
         update t_core_sys_user_role_rel
-        set app_id = #{appId,jdbcType=INTEGER},
+        set app_id = #{appId,jdbcType=VARCHAR},
         user_number = #{userNumber,jdbcType=VARCHAR},
         role_code = #{roleCode,jdbcType=VARCHAR},
         creation_by_id = #{creationById,jdbcType=VARCHAR},
@@ -156,7 +156,7 @@
         <include refid="Base_Column_List"/>
         from t_core_sys_user_role_rel
         where
-        app_id = #{v.appId,jdbcType=INTEGER}
+        app_id = #{v.appId,jdbcType=VARCHAR}
         <if test="v.userNumber != null and v.userNumber != ''">
             and user_number = #{v.userNumber,jdbcType=INTEGER}
         </if>

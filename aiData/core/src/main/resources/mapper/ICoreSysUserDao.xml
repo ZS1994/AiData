@@ -34,13 +34,13 @@
         where p_id = #{pId,jdbcType=INTEGER}
     </delete>
     <insert id="insert" parameterType="com.zs.aidata.core.sys.user.vo.CoreSysUserDO">
-        insert into t_core_sys_user (p_id, app_id, user_number,
+        insert into t_core_sys_user (app_id, user_number,
         user_password, user_name, mail,
         phone, delete_flag,
         img, creation_by_id, creation_by_user,
         creation_date, last_updated_by_id, last_updated_by_user,
         last_updated_date)
-        values (#{pId,jdbcType=INTEGER}, #{appId,jdbcType=VARCHAR}, #{userNumber,jdbcType=VARCHAR},
+        values ( #{appId,jdbcType=VARCHAR}, #{userNumber,jdbcType=VARCHAR},
         #{userPassword,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}, #{mail,jdbcType=VARCHAR},
         #{phone,jdbcType=VARCHAR}, #{deleteFlag,jdbcType=VARCHAR},
         #{img,jdbcType=VARCHAR}, #{creationById,jdbcType=VARCHAR}, #{creationByUser,jdbcType=VARCHAR},

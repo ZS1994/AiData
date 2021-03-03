@@ -2,6 +2,8 @@ package com.zs.aidata.core.tools;
 
 import org.springframework.web.client.RestTemplate;
 
+import java.util.Date;
+
 /**
  * 所有的service都应该继承它
  *
@@ -31,6 +33,24 @@ public class BaseCoreService {
         } catch (Exception e) {
             throw new AiDataApplicationException(e.toString());
         }
+    }
+
+    public void initBaseFieldByCreate(BaseEntityVO entityVO) {
+        checkNotEmpty(entityVO);
+        entityVO.setCreationById("admin");
+        entityVO.setCreationByUser("admin");
+        entityVO.setCreationDate(new Date());
+        entityVO.setLastUpdatedById("admin");
+        entityVO.setLastUpdatedByUser("admin");
+        entityVO.setLastUpdatedDate(new Date());
+    }
+
+
+    public void initBaseFieldByUpdate(BaseEntityVO entityVO){
+        checkNotEmpty(entityVO);
+        entityVO.setLastUpdatedById("admin");
+        entityVO.setLastUpdatedByUser("admin");
+        entityVO.setLastUpdatedDate(new Date());
     }
 
 }

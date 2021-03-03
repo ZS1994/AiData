@@ -3,7 +3,7 @@
 <mapper namespace="com.zs.aidata.core.sys.role.dao.ICoreSysRolePermissionRelDao">
     <resultMap id="BaseResultMap" type="com.zs.aidata.core.sys.role.vo.CoreSysRolePermissionRelDO">
         <id column="p_id" jdbcType="INTEGER" property="pId"/>
-        <result column="app_id" jdbcType="INTEGER" property="appId"/>
+        <result column="app_id" jdbcType="VARCHAR" property="appId"/>
         <result column="role_code" jdbcType="VARCHAR" property="roleCode"/>
         <result column="perm_code" jdbcType="VARCHAR" property="permCode"/>
         <result column="creation_by_id" jdbcType="VARCHAR" property="creationById"/>
@@ -28,11 +28,11 @@
         where p_id = #{pId,jdbcType=INTEGER}
     </delete>
     <insert id="insert" parameterType="com.zs.aidata.core.sys.role.vo.CoreSysRolePermissionRelDO">
-        insert into t_core_sys_role_permission_rel (p_id, app_id, role_code,
+        insert into t_core_sys_role_permission_rel ( app_id, role_code,
         perm_code, creation_by_id, creation_by_user,
         creation_date, last_updated_by_id, last_updated_by_user,
         last_updated_date)
-        values (#{pId,jdbcType=INTEGER}, #{appId,jdbcType=INTEGER}, #{roleCode,jdbcType=VARCHAR},
+        values ( #{appId,jdbcType=VARCHAR}, #{roleCode,jdbcType=VARCHAR},
         #{permCode,jdbcType=VARCHAR}, #{creationById,jdbcType=VARCHAR}, #{creationByUser,jdbcType=VARCHAR},
         #{creationDate,jdbcType=TIMESTAMP}, #{lastUpdatedById,jdbcType=VARCHAR}, #{lastUpdatedByUser,jdbcType=VARCHAR},
         #{lastUpdatedDate,jdbcType=TIMESTAMP})
@@ -76,7 +76,7 @@
                 #{pId,jdbcType=INTEGER},
             </if>
             <if test="appId != null">
-                #{appId,jdbcType=INTEGER},
+                #{appId,jdbcType=VARCHAR},
             </if>
             <if test="roleCode != null">
                 #{roleCode,jdbcType=VARCHAR},
@@ -108,7 +108,7 @@
         update t_core_sys_role_permission_rel
         <set>
             <if test="appId != null">
-                app_id = #{appId,jdbcType=INTEGER},
+                app_id = #{appId,jdbcType=VARCHAR},
             </if>
             <if test="roleCode != null">
                 role_code = #{roleCode,jdbcType=VARCHAR},
@@ -139,7 +139,7 @@
     </update>
     <update id="updateByPrimaryKey" parameterType="com.zs.aidata.core.sys.role.vo.CoreSysRolePermissionRelDO">
         update t_core_sys_role_permission_rel
-        set app_id = #{appId,jdbcType=INTEGER},
+        set app_id = #{appId,jdbcType=VARCHAR},
         role_code = #{roleCode,jdbcType=VARCHAR},
         perm_code = #{permCode,jdbcType=VARCHAR},
         creation_by_id = #{creationById,jdbcType=VARCHAR},
@@ -150,4 +150,18 @@
         last_updated_date = #{lastUpdatedDate,jdbcType=TIMESTAMP}
         where p_id = #{pId,jdbcType=INTEGER}
     </update>
+
+    <delete id="deleteByPermCodeList">
+        delete from t_core_sys_role_permission_rel
+        where
+        app_id = #{appId,jdbcType=VARCHAR}
+        <if test="permCodeList != null and permCodeList.size != 0 ">
+            <foreach collection="permCodeList" item="permCode" open="and perm_code in (" close=")" separator=",">
+                #{permCode,jdbcType=VARCHAR}
+            </foreach>
+        </if>
+        <if test="permCodeList == null or permCodeList.size == 0 ">
+            and 1=2
+        </if>
+    </delete>
 </mapper>
