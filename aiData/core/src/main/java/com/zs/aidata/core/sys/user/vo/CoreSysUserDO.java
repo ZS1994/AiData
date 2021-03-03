@@ -19,8 +19,6 @@ public class CoreSysUserDO extends BaseEntityVO {
 
     private String deleteFlag;
 
-    private String rids;
-
     private String img;
 
 }

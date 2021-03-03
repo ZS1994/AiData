@@ -1,6 +1,8 @@
 package com.zs.aidata.core.sys.permission.service;
 
 import com.zs.aidata.core.sys.permission.vo.CoreSysPermissionDO;
+import com.zs.aidata.core.sys.permission.vo.CoreSysUpdatePermissionInVO;
+import com.zs.aidata.core.tools.AiDataApplicationException;
 
 import java.util.List;
 
@@ -17,4 +19,14 @@ public interface ICoreSysPermissionService {
      * @return
      */
     List<CoreSysPermissionDO> selectListByUserNumber(String appId, String userNumber);
+
+
+    /**
+     * 自动更新所有权限
+     *
+     * @param inVO
+     * @throws AiDataApplicationException
+     */
+    void updateAllPermissionByAuto(CoreSysUpdatePermissionInVO inVO) throws AiDataApplicationException;
+
 }

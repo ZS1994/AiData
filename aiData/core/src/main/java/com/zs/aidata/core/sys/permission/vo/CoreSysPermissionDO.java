@@ -14,16 +14,4 @@ public class CoreSysPermissionDO extends BaseEntityVO {
 
     private String permCode;
 
-    private String methodType;
-
-    private String permType;
-
-    private String permFlag;
-
-    private String menuImg;
-
-    private Integer menuOrder;
-
-    private Integer menuParentId;
-
 }

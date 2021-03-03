@@ -6,7 +6,6 @@
         <result column="app_id" jdbcType="VARCHAR" property="appId"/>
         <result column="role_name" jdbcType="VARCHAR" property="roleName"/>
         <result column="role_desc" jdbcType="VARCHAR" property="roleDesc"/>
-        <result column="pids" jdbcType="VARCHAR" property="pids"/>
         <result column="creation_by_id" jdbcType="VARCHAR" property="creationById"/>
         <result column="creation_by_user" jdbcType="VARCHAR" property="creationByUser"/>
         <result column="creation_date" jdbcType="TIMESTAMP" property="creationDate"/>
@@ -15,7 +14,7 @@
         <result column="last_updated_date" jdbcType="TIMESTAMP" property="lastUpdatedDate"/>
     </resultMap>
     <sql id="Base_Column_List">
-        p_id, app_id, role_name, role_desc, pids, creation_by_id, creation_by_user, creation_date,
+        p_id, app_id, role_name, role_desc,  creation_by_id, creation_by_user, creation_date,
         last_updated_by_id, last_updated_by_user, last_updated_date
     </sql>
     <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
@@ -30,11 +29,11 @@
     </delete>
     <insert id="insert" parameterType="com.zs.aidata.core.sys.role.vo.CoreSysRoleDO">
         insert into t_core_sys_role (p_id, app_id, role_name,
-        role_desc, pids, creation_by_id,
+        role_desc, creation_by_id,
         creation_by_user, creation_date, last_updated_by_id,
         last_updated_by_user, last_updated_date)
         values (#{pId,jdbcType=INTEGER}, #{appId,jdbcType=VARCHAR}, #{roleName,jdbcType=VARCHAR},
-        #{roleDesc,jdbcType=VARCHAR}, #{pids,jdbcType=VARCHAR}, #{creationById,jdbcType=VARCHAR},
+        #{roleDesc,jdbcType=VARCHAR}, #{creationById,jdbcType=VARCHAR},
         #{creationByUser,jdbcType=VARCHAR}, #{creationDate,jdbcType=TIMESTAMP}, #{lastUpdatedById,jdbcType=VARCHAR},
         #{lastUpdatedByUser,jdbcType=VARCHAR}, #{lastUpdatedDate,jdbcType=TIMESTAMP})
     </insert>
@@ -52,9 +51,6 @@
             </if>
             <if test="roleDesc != null">
                 role_desc,
-            </if>
-            <if test="pids != null">
-                pids,
             </if>
             <if test="creationById != null">
                 creation_by_id,
@@ -88,9 +84,6 @@
             <if test="roleDesc != null">
                 #{roleDesc,jdbcType=VARCHAR},
             </if>
-            <if test="pids != null">
-                #{pids,jdbcType=VARCHAR},
-            </if>
             <if test="creationById != null">
                 #{creationById,jdbcType=VARCHAR},
             </if>
@@ -123,9 +116,6 @@
             <if test="roleDesc != null">
                 role_desc = #{roleDesc,jdbcType=VARCHAR},
             </if>
-            <if test="pids != null">
-                pids = #{pids,jdbcType=VARCHAR},
-            </if>
             <if test="creationById != null">
                 creation_by_id = #{creationById,jdbcType=VARCHAR},
             </if>
@@ -152,7 +142,6 @@
         set app_id = #{appId,jdbcType=VARCHAR},
         role_name = #{roleName,jdbcType=VARCHAR},
         role_desc = #{roleDesc,jdbcType=VARCHAR},
-        pids = #{pids,jdbcType=VARCHAR},
         creation_by_id = #{creationById,jdbcType=VARCHAR},
         creation_by_user = #{creationByUser,jdbcType=VARCHAR},
         creation_date = #{creationDate,jdbcType=TIMESTAMP},

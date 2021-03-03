@@ -10,7 +10,6 @@
         <result column="mail" jdbcType="VARCHAR" property="mail"/>
         <result column="phone" jdbcType="VARCHAR" property="phone"/>
         <result column="delete_flag" jdbcType="VARCHAR" property="deleteFlag"/>
-        <result column="rids" jdbcType="VARCHAR" property="rids"/>
         <result column="img" jdbcType="VARCHAR" property="img"/>
         <result column="creation_by_id" jdbcType="VARCHAR" property="creationById"/>
         <result column="creation_by_user" jdbcType="VARCHAR" property="creationByUser"/>
@@ -20,7 +19,7 @@
         <result column="last_updated_date" jdbcType="TIMESTAMP" property="lastUpdatedDate"/>
     </resultMap>
     <sql id="Base_Column_List">
-        p_id, app_id, user_number, user_password, user_name, mail, phone, delete_flag, rids,
+        p_id, app_id, user_number, user_password, user_name, mail, phone, delete_flag,
         img, creation_by_id, creation_by_user, creation_date, last_updated_by_id, last_updated_by_user,
         last_updated_date
     </sql>
@@ -37,13 +36,13 @@
     <insert id="insert" parameterType="com.zs.aidata.core.sys.user.vo.CoreSysUserDO">
         insert into t_core_sys_user (p_id, app_id, user_number,
         user_password, user_name, mail,
-        phone, delete_flag, rids,
+        phone, delete_flag,
         img, creation_by_id, creation_by_user,
         creation_date, last_updated_by_id, last_updated_by_user,
         last_updated_date)
         values (#{pId,jdbcType=INTEGER}, #{appId,jdbcType=VARCHAR}, #{userNumber,jdbcType=VARCHAR},
         #{userPassword,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}, #{mail,jdbcType=VARCHAR},
-        #{phone,jdbcType=VARCHAR}, #{deleteFlag,jdbcType=VARCHAR}, #{rids,jdbcType=VARCHAR},
+        #{phone,jdbcType=VARCHAR}, #{deleteFlag,jdbcType=VARCHAR},
         #{img,jdbcType=VARCHAR}, #{creationById,jdbcType=VARCHAR}, #{creationByUser,jdbcType=VARCHAR},
         #{creationDate,jdbcType=TIMESTAMP}, #{lastUpdatedById,jdbcType=VARCHAR}, #{lastUpdatedByUser,jdbcType=VARCHAR},
         #{lastUpdatedDate,jdbcType=TIMESTAMP})
@@ -74,9 +73,6 @@
             </if>
             <if test="deleteFlag != null">
                 delete_flag,
-            </if>
-            <if test="rids != null">
-                rids,
             </if>
             <if test="img != null">
                 img,
@@ -125,9 +121,6 @@
             <if test="deleteFlag != null">
                 #{deleteFlag,jdbcType=VARCHAR},
             </if>
-            <if test="rids != null">
-                #{rids,jdbcType=VARCHAR},
-            </if>
             <if test="img != null">
                 #{img,jdbcType=VARCHAR},
             </if>
@@ -175,9 +168,6 @@
             <if test="deleteFlag != null">
                 delete_flag = #{deleteFlag,jdbcType=VARCHAR},
             </if>
-            <if test="rids != null">
-                rids = #{rids,jdbcType=VARCHAR},
-            </if>
             <if test="img != null">
                 img = #{img,jdbcType=VARCHAR},
             </if>
@@ -211,7 +201,6 @@
         mail = #{mail,jdbcType=VARCHAR},
         phone = #{phone,jdbcType=VARCHAR},
         delete_flag = #{deleteFlag,jdbcType=VARCHAR},
-        rids = #{rids,jdbcType=VARCHAR},
         img = #{img,jdbcType=VARCHAR},
         creation_by_id = #{creationById,jdbcType=VARCHAR},
         creation_by_user = #{creationByUser,jdbcType=VARCHAR},

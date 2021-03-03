@@ -10,6 +10,4 @@ public class CoreSysRoleDO extends BaseEntityVO {
 
     private String roleDesc;
 
-    private String pids;
-
 }

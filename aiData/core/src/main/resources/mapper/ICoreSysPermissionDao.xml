@@ -8,12 +8,6 @@
         <result column="perm_url" jdbcType="VARCHAR" property="permUrl"/>
         <result column="perm_method" jdbcType="VARCHAR" property="permMethod"/>
         <result column="perm_code" jdbcType="VARCHAR" property="permCode"/>
-        <result column="method_type" jdbcType="VARCHAR" property="methodType"/>
-        <result column="perm_type" jdbcType="VARCHAR" property="permType"/>
-        <result column="perm_flag" jdbcType="VARCHAR" property="permFlag"/>
-        <result column="menu_img" jdbcType="VARCHAR" property="menuImg"/>
-        <result column="menu_order" jdbcType="INTEGER" property="menuOrder"/>
-        <result column="menu_parent_id" jdbcType="INTEGER" property="menuParentId"/>
         <result column="creation_by_id" jdbcType="VARCHAR" property="creationById"/>
         <result column="creation_by_user" jdbcType="VARCHAR" property="creationByUser"/>
         <result column="creation_date" jdbcType="TIMESTAMP" property="creationDate"/>
@@ -22,8 +16,7 @@
         <result column="last_updated_date" jdbcType="TIMESTAMP" property="lastUpdatedDate"/>
     </resultMap>
     <sql id="Base_Column_List">
-        p_id, app_id, perm_name, perm_url, perm_method, perm_code, method_type, perm_type,
-        perm_flag, menu_img, menu_order, menu_parent_id, creation_by_id, creation_by_user,
+        p_id, app_id, perm_name, perm_url, perm_method, perm_code,  creation_by_id, creation_by_user,
         creation_date, last_updated_by_id, last_updated_by_user, last_updated_date
     </sql>
     <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
@@ -39,15 +32,11 @@
     <insert id="insert" parameterType="com.zs.aidata.core.sys.permission.vo.CoreSysPermissionDO">
         insert into t_core_sys_permission (p_id, app_id, perm_name,
         perm_url, perm_method, perm_code,
-        method_type, perm_type, perm_flag,
-        menu_img, menu_order, menu_parent_id,
         creation_by_id, creation_by_user, creation_date,
         last_updated_by_id, last_updated_by_user, last_updated_date
         )
         values (#{pId,jdbcType=INTEGER}, #{appId,jdbcType=VARCHAR}, #{permName,jdbcType=VARCHAR},
         #{permUrl,jdbcType=VARCHAR}, #{permMethod,jdbcType=VARCHAR}, #{permCode,jdbcType=VARCHAR},
-        #{methodType,jdbcType=VARCHAR}, #{permType,jdbcType=VARCHAR}, #{permFlag,jdbcType=VARCHAR},
-        #{menuImg,jdbcType=VARCHAR}, #{menuOrder,jdbcType=INTEGER}, #{menuParentId,jdbcType=INTEGER},
         #{creationById,jdbcType=VARCHAR}, #{creationByUser,jdbcType=VARCHAR}, #{creationDate,jdbcType=TIMESTAMP},
         #{lastUpdatedById,jdbcType=VARCHAR}, #{lastUpdatedByUser,jdbcType=VARCHAR},
         #{lastUpdatedDate,jdbcType=TIMESTAMP}
@@ -73,24 +62,6 @@
             </if>
             <if test="permCode != null">
                 perm_code,
-            </if>
-            <if test="methodType != null">
-                method_type,
-            </if>
-            <if test="permType != null">
-                perm_type,
-            </if>
-            <if test="permFlag != null">
-                perm_flag,
-            </if>
-            <if test="menuImg != null">
-                menu_img,
-            </if>
-            <if test="menuOrder != null">
-                menu_order,
-            </if>
-            <if test="menuParentId != null">
-                menu_parent_id,
             </if>
             <if test="creationById != null">
                 creation_by_id,
@@ -130,24 +101,6 @@
             <if test="permCode != null">
                 #{permCode,jdbcType=VARCHAR},
             </if>
-            <if test="methodType != null">
-                #{methodType,jdbcType=VARCHAR},
-            </if>
-            <if test="permType != null">
-                #{permType,jdbcType=VARCHAR},
-            </if>
-            <if test="permFlag != null">
-                #{permFlag,jdbcType=VARCHAR},
-            </if>
-            <if test="menuImg != null">
-                #{menuImg,jdbcType=VARCHAR},
-            </if>
-            <if test="menuOrder != null">
-                #{menuOrder,jdbcType=INTEGER},
-            </if>
-            <if test="menuParentId != null">
-                #{menuParentId,jdbcType=INTEGER},
-            </if>
             <if test="creationById != null">
                 #{creationById,jdbcType=VARCHAR},
             </if>
@@ -186,24 +139,6 @@
             <if test="permCode != null">
                 perm_code = #{permCode,jdbcType=VARCHAR},
             </if>
-            <if test="methodType != null">
-                method_type = #{methodType,jdbcType=VARCHAR},
-            </if>
-            <if test="permType != null">
-                perm_type = #{permType,jdbcType=VARCHAR},
-            </if>
-            <if test="permFlag != null">
-                perm_flag = #{permFlag,jdbcType=VARCHAR},
-            </if>
-            <if test="menuImg != null">
-                menu_img = #{menuImg,jdbcType=VARCHAR},
-            </if>
-            <if test="menuOrder != null">
-                menu_order = #{menuOrder,jdbcType=INTEGER},
-            </if>
-            <if test="menuParentId != null">
-                menu_parent_id = #{menuParentId,jdbcType=INTEGER},
-            </if>
             <if test="creationById != null">
                 creation_by_id = #{creationById,jdbcType=VARCHAR},
             </if>
@@ -232,12 +167,6 @@
         perm_url = #{permUrl,jdbcType=VARCHAR},
         perm_method = #{permMethod,jdbcType=VARCHAR},
         perm_code = #{permCode,jdbcType=VARCHAR},
-        method_type = #{methodType,jdbcType=VARCHAR},
-        perm_type = #{permType,jdbcType=VARCHAR},
-        perm_flag = #{permFlag,jdbcType=VARCHAR},
-        menu_img = #{menuImg,jdbcType=VARCHAR},
-        menu_order = #{menuOrder,jdbcType=INTEGER},
-        menu_parent_id = #{menuParentId,jdbcType=INTEGER},
         creation_by_id = #{creationById,jdbcType=VARCHAR},
         creation_by_user = #{creationByUser,jdbcType=VARCHAR},
         creation_date = #{creationDate,jdbcType=TIMESTAMP},
@@ -249,8 +178,7 @@
 
     <select id="selectListByPermIdList" resultMap="BaseResultMap">
         select
-            app_id, perm_name, perm_url, perm_method, perm_code, method_type, perm_type,
-            perm_flag, menu_img, menu_order
+            app_id, perm_name, perm_url, perm_method, perm_code
         from t_core_sys_permission
         where
         app_id = #{appId,jdbcType=VARCHAR}
@@ -263,5 +191,13 @@
             <!--没让它一也-->
             and 1=2
         </if>
+    </select>
+
+    <select id="selectList" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_core_sys_permission
+        where
+        app_id = #{appId,jdbcType=VARCHAR}
     </select>
 </mapper>

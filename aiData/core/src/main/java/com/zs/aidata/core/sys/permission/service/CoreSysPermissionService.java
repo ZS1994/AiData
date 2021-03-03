@@ -2,6 +2,7 @@ package com.zs.aidata.core.sys.permission.service;
 
 import com.zs.aidata.core.sys.permission.dao.ICoreSysPermissionDao;
 import com.zs.aidata.core.sys.permission.vo.CoreSysPermissionDO;
+import com.zs.aidata.core.sys.permission.vo.CoreSysUpdatePermissionInVO;
 import com.zs.aidata.core.sys.role.dao.ICoreSysRoleDao;
 import com.zs.aidata.core.sys.role.vo.CoreSysRoleDO;
 import com.zs.aidata.core.sys.user.dao.ICoreSysUserDao;
@@ -57,5 +58,17 @@ public class CoreSysPermissionService extends BaseCoreService implements ICoreSy
             return permissionList;
         }
         return new ArrayList<>();
+    }
+
+    @Override
+    public void updateAllPermissionByAuto(CoreSysUpdatePermissionInVO inVO) throws AiDataApplicationException {
+        checkNotEmpty(inVO, "appId", "coreSysPermissionDOList");
+        // 查一下当前app下的所有权限
+        CoreSysPermissionDO queryDO = new CoreSysPermissionDO();
+        queryDO.setAppId(inVO.getAppId());
+        List<CoreSysPermissionDO> oldPermissionList = iCoreSysPermissionDao.selectList(queryDO);
+
+
+
     }
 }
