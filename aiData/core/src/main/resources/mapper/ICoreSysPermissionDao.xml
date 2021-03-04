@@ -193,12 +193,10 @@
         </if>
     </select>
 
-    <select id="selectList" resultMap="BaseResultMap">
+    <select id="selectList" parameterType="com.zs.aidata.core.sys.permission.vo.CoreSysPermissionDO" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
         from t_core_sys_permission
-        where
-        app_id = #{v.appId,jdbcType=VARCHAR}
     </select>
 
     <select id="selectListByRoleCodeList" resultMap="BaseResultMap">

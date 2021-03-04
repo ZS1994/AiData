@@ -1,6 +1,8 @@
 package com.zs.aidata.core.sys.permission.controller;
 
+import com.github.pagehelper.PageInfo;
 import com.zs.aidata.core.sys.permission.service.ICoreSysPermissionService;
+import com.zs.aidata.core.sys.permission.vo.CoreSysPermissionDO;
 import com.zs.aidata.core.sys.permission.vo.CoreSysUpdatePermissionInVO;
 import com.zs.aidata.core.tools.AiDataApplicationException;
 import io.swagger.annotations.Api;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.inject.Inject;
+import java.util.List;
 
 /**
  * 权限服务接口
@@ -39,5 +42,17 @@ public class CoreSysPermissionController {
         iCoreSysPermissionService.updateAllPermissionByAuto(inVO);
     }
 
+    /**
+     * 分页查询
+     *
+     * @param queryVO
+     * @return
+     * @throws AiDataApplicationException
+     */
+    @PostMapping("findListByPage")
+    @ApiOperation(value = "分页查询", notes = "分页查询")
+    PageInfo<CoreSysPermissionDO> findListByPage(CoreSysPermissionDO queryVO) throws AiDataApplicationException {
+        return iCoreSysPermissionService.findListByPage(queryVO);
+    }
 
 }

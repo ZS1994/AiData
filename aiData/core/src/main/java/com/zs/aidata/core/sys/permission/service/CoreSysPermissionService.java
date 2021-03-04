@@ -1,6 +1,8 @@
 package com.zs.aidata.core.sys.permission.service;
 
 import com.alibaba.fastjson.JSONArray;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.zs.aidata.core.sys.permission.dao.ICoreSysPermissionDao;
 import com.zs.aidata.core.sys.permission.vo.CoreSysPermissionDO;
 import com.zs.aidata.core.sys.permission.vo.CoreSysUpdatePermissionInVO;
@@ -133,5 +135,16 @@ public class CoreSysPermissionService extends BaseCoreService implements ICoreSy
                 .collect(Collectors.toList());
 
         iCoreSysRolePermissionRelDao.deleteByPermCodeList(inVO.getAppId(), deleteOldPermCodeList);
+    }
+
+    @Override
+    public PageInfo<CoreSysPermissionDO> findListByPage(CoreSysPermissionDO queryVO) throws AiDataApplicationException {
+        // 查询第一页，每一页显示2条记录
+        PageHelper.startPage(1, 100);
+        // 目标操作：查询用户数据
+        List<CoreSysPermissionDO> list = iCoreSysPermissionDao.selectList(queryVO);
+        // 封装分页结果数据：PageInfo
+        PageInfo<CoreSysPermissionDO> pageInfo = new PageInfo<CoreSysPermissionDO>(list);
+        return pageInfo;
     }
 }

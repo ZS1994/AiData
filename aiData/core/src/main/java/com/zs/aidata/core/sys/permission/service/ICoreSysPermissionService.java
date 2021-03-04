@@ -1,5 +1,6 @@
 package com.zs.aidata.core.sys.permission.service;
 
+import com.github.pagehelper.PageInfo;
 import com.zs.aidata.core.sys.permission.vo.CoreSysPermissionDO;
 import com.zs.aidata.core.sys.permission.vo.CoreSysUpdatePermissionInVO;
 import com.zs.aidata.core.tools.AiDataApplicationException;
@@ -29,4 +30,12 @@ public interface ICoreSysPermissionService {
      */
     void updateAllPermissionByAuto(CoreSysUpdatePermissionInVO inVO) throws AiDataApplicationException;
 
+    /**
+     * 分页查找
+     *
+     * @param queryVO
+     * @return
+     * @throws AiDataApplicationException
+     */
+    PageInfo<CoreSysPermissionDO> findListByPage(CoreSysPermissionDO queryVO) throws AiDataApplicationException;
 }
