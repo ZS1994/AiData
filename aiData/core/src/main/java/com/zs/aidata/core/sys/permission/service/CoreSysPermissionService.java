@@ -127,20 +127,23 @@ public class CoreSysPermissionService extends BaseCoreService implements ICoreSy
                 deleteOldPermList.add(oldPermTmp);
             }
         }
-        iCoreSysPermissionDao.deleteOnceGo(deleteOldPermList);
+        if (isNotEmpty(deleteOldPermList)) {
+            iCoreSysPermissionDao.deleteOnceGo(deleteOldPermList);
+        }
 
         // 清理不存在的 角色-权限 关系
         List<String> deleteOldPermCodeList = deleteOldPermList
                 .stream().map(CoreSysPermissionDO::getPermCode)
                 .collect(Collectors.toList());
-
-        iCoreSysRolePermissionRelDao.deleteByPermCodeList(inVO.getAppId(), deleteOldPermCodeList);
+        if (isNotEmpty(deleteOldPermCodeList)) {
+            iCoreSysRolePermissionRelDao.deleteByPermCodeList(inVO.getAppId(), deleteOldPermCodeList);
+        }
     }
 
     @Override
-    public PageInfo<CoreSysPermissionDO> findListByPage(CoreSysPermissionDO queryVO) throws AiDataApplicationException {
+    public PageInfo<CoreSysPermissionDO> findListByPage(CoreSysPermissionDO queryVO, Integer pageSize, Integer currPage) throws AiDataApplicationException {
         // 查询第一页，每一页显示2条记录
-        PageHelper.startPage(1, 100);
+        PageHelper.startPage(currPage, pageSize);
         // 目标操作：查询用户数据
         List<CoreSysPermissionDO> list = iCoreSysPermissionDao.selectList(queryVO);
         // 封装分页结果数据：PageInfo

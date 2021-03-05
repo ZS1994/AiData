@@ -37,5 +37,5 @@ public interface ICoreSysPermissionService {
      * @return
      * @throws AiDataApplicationException
      */
-    PageInfo<CoreSysPermissionDO> findListByPage(CoreSysPermissionDO queryVO) throws AiDataApplicationException;
+    PageInfo<CoreSysPermissionDO> findListByPage(CoreSysPermissionDO queryVO, Integer pageSize, Integer currPage) throws AiDataApplicationException;
 }

@@ -8,6 +8,7 @@ import com.zs.aidata.core.tools.AiDataApplicationException;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -49,10 +50,11 @@ public class CoreSysPermissionController {
      * @return
      * @throws AiDataApplicationException
      */
-    @PostMapping("findListByPage")
+    @PostMapping("findListByPage/{pageSize}/{currPage}")
     @ApiOperation(value = "分页查询", notes = "分页查询")
-    PageInfo<CoreSysPermissionDO> findListByPage(CoreSysPermissionDO queryVO) throws AiDataApplicationException {
-        return iCoreSysPermissionService.findListByPage(queryVO);
+    PageInfo<CoreSysPermissionDO> findListByPage(CoreSysPermissionDO queryVO, @PathVariable("pageSize") Integer pageSize, @PathVariable("currPage") Integer currPage)
+            throws AiDataApplicationException {
+        return iCoreSysPermissionService.findListByPage(queryVO, pageSize, currPage);
     }
 
 }
