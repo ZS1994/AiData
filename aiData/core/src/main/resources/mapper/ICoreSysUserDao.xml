@@ -218,4 +218,10 @@
         app_id = #{appId,jdbcType=VARCHAR}
         and user_number = #{userNumber,jdbcType=VARCHAR}
     </select>
+
+    <select id="selectList" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_core_sys_user
+    </select>
 </mapper>

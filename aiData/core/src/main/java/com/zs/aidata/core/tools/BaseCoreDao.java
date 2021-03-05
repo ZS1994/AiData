@@ -1,10 +1,15 @@
 package com.zs.aidata.core.tools;
 
 import cn.hutool.core.collection.CollUtil;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.google.common.collect.Lists;
+import com.zs.aidata.core.sys.permission.vo.CoreSysPermissionDO;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.function.Function;
+import java.util.function.Supplier;
 
 /**
  * 基础dao，dao都要继承它
@@ -97,5 +102,22 @@ public interface BaseCoreDao<T> {
         return row;
     }
 
+    /**
+     * 快速构建分页查询方法
+     *
+     * @param function
+     * @param pageSize
+     * @param currPage
+     * @return
+     */
+    default PageInfo<T> buildFindListByPage(Supplier<List<T>> function, Integer pageSize, Integer currPage) {
+        // 查询第一页，每一页显示2条记录
+        PageHelper.startPage(currPage, pageSize);
+        // 目标操作：查询用户数据
+        List<T> list = function.get();
+        // 封装分页结果数据：PageInfo
+        PageInfo<T> pageInfo = new PageInfo<T>(list);
+        return pageInfo;
+    }
 
 }
