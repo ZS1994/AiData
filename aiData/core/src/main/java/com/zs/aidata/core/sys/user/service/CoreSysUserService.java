@@ -3,6 +3,7 @@ package com.zs.aidata.core.sys.user.service;
 import com.github.pagehelper.PageInfo;
 import com.zs.aidata.core.sys.user.dao.ICoreSysUserDao;
 import com.zs.aidata.core.sys.user.vo.CoreSysUserDO;
+import com.zs.aidata.core.tools.AiDataApplicationException;
 import com.zs.aidata.core.tools.BaseCoreService;
 import com.zs.aidata.core.tools.Constans;
 
@@ -27,7 +28,7 @@ public class CoreSysUserService extends BaseCoreService implements ICoreSysUserS
     }
 
     @Override
-    public PageInfo<CoreSysUserDO> findListByPage(CoreSysUserDO queryVO, Integer pageSize, Integer currPage) throws ArrayIndexOutOfBoundsException {
+    public PageInfo<CoreSysUserDO> findListByPage(CoreSysUserDO queryVO, Integer pageSize, Integer currPage) throws AiDataApplicationException {
         return iCoreSysUserDao.buildFindListByPage(() -> iCoreSysUserDao.selectList(queryVO), pageSize, currPage);
     }
 
@@ -41,7 +42,6 @@ public class CoreSysUserService extends BaseCoreService implements ICoreSysUserS
 
     @Override
     public void updateUser(CoreSysUserDO userDO) {
-        userDO.getpId();
         checkNotEmpty(userDO, "pId", "appId", "userNumber", "userPassword", "userName");
         iCoreSysUserDao.updateByPrimaryKey(userDO);
     }

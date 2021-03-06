@@ -1,7 +1,7 @@
-package com.zs.aidata.core.sys.role.service;
+package com.zs.aidata.core.sys.menu.service;
 
 import com.github.pagehelper.PageInfo;
-import com.zs.aidata.core.sys.role.vo.CoreSysRoleDO;
+import com.zs.aidata.core.sys.menu.vo.CoreSysMenuDO;
 import com.zs.aidata.core.tools.AiDataApplicationException;
 
 import java.util.List;
@@ -10,7 +10,7 @@ import java.util.List;
  * @author 张顺
  * @since 2021/3/1
  */
-public interface ICoreSysRoleService {
+public interface ICoreSysMenuService {
 
 
     /**
@@ -21,7 +21,7 @@ public interface ICoreSysRoleService {
      * @param currPage
      * @throws ArrayIndexOutOfBoundsException
      */
-    PageInfo<CoreSysRoleDO> findListByPage(CoreSysRoleDO queryVO, Integer pageSize,
+    PageInfo<CoreSysMenuDO> findListByPage(CoreSysMenuDO queryVO, Integer pageSize,
                                            Integer currPage) throws AiDataApplicationException;
 
 
@@ -30,7 +30,7 @@ public interface ICoreSysRoleService {
      *
      * @param userDO
      */
-    void insert(CoreSysRoleDO userDO);
+    void insert(CoreSysMenuDO userDO);
 
 
     /**
@@ -38,7 +38,7 @@ public interface ICoreSysRoleService {
      *
      * @param userDO
      */
-    void update(CoreSysRoleDO userDO);
+    void update(CoreSysMenuDO userDO);
 
     /**
      * 删除
@@ -46,4 +46,14 @@ public interface ICoreSysRoleService {
      * @param pId
      */
     void delete(Integer pId);
+
+
+    /**
+     * 查询某个应用的所有菜单，并且为树型结构的数据
+     *
+     * @param queryVO
+     * @return
+     * @throws AiDataApplicationException
+     */
+    List<CoreSysMenuDO> selectTreeMenu(CoreSysMenuDO queryVO) throws AiDataApplicationException;
 }

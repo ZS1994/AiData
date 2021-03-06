@@ -1,9 +1,8 @@
 package com.zs.aidata.core.sys.user.service;
 
 import com.github.pagehelper.PageInfo;
-import com.zs.aidata.core.sys.permission.vo.CoreSysPermissionDO;
 import com.zs.aidata.core.sys.user.vo.CoreSysUserDO;
-import org.springframework.web.bind.annotation.PathVariable;
+import com.zs.aidata.core.tools.AiDataApplicationException;
 
 /**
  * 用户表的service
@@ -32,7 +31,7 @@ public interface ICoreSysUserService {
      * @throws ArrayIndexOutOfBoundsException
      */
     PageInfo<CoreSysUserDO> findListByPage(CoreSysUserDO queryVO, Integer pageSize,
-                                           Integer currPage) throws ArrayIndexOutOfBoundsException;
+                                           Integer currPage) throws AiDataApplicationException;
 
 
     /**

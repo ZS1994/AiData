@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.zs.aidata.core.sys.role.dao.ICoreSysRoleDao">
-    <resultMap id="BaseResultMap" type="com.zs.aidata.core.sys.role.vo.CoreSysRoleDO">
+<mapper namespace="com.zs.aidata.core.sys.menu.dao.ICoreSysMenuDao">
+    <resultMap id="BaseResultMap" type="com.zs.aidata.core.sys.menu.vo.CoreSysMenuDO">
         <id column="p_id" jdbcType="INTEGER" property="pId"/>
         <result column="app_id" jdbcType="VARCHAR" property="appId"/>
-        <result column="role_name" jdbcType="VARCHAR" property="roleName"/>
-        <result column="role_code" jdbcType="VARCHAR" property="roleCode"/>
-        <result column="role_desc" jdbcType="VARCHAR" property="roleDesc"/>
+        <result column="menu_code" jdbcType="VARCHAR" property="menuCode"/>
+        <result column="menu_name" jdbcType="VARCHAR" property="menuName"/>
+        <result column="menu_path" jdbcType="VARCHAR" property="menuPath"/>
+        <result column="menu_order" jdbcType="INTEGER" property="menuOrder"/>
+        <result column="parent_menu_code" jdbcType="VARCHAR" property="parentMenuCode"/>
+        <result column="perm_code" jdbcType="VARCHAR" property="permCode"/>
         <result column="creation_by_id" jdbcType="VARCHAR" property="creationById"/>
         <result column="creation_by_user" jdbcType="VARCHAR" property="creationByUser"/>
         <result column="creation_date" jdbcType="TIMESTAMP" property="creationDate"/>
@@ -15,31 +18,34 @@
         <result column="last_updated_date" jdbcType="TIMESTAMP" property="lastUpdatedDate"/>
     </resultMap>
     <sql id="Base_Column_List">
-        p_id, app_id, role_name, role_code,role_desc, creation_by_id, creation_by_user, creation_date,
-        last_updated_by_id, last_updated_by_user, last_updated_date
+        p_id, app_id, menu_code, menu_name, menu_path, menu_order, parent_menu_code, perm_code,
+        creation_by_id, creation_by_user, creation_date, last_updated_by_id, last_updated_by_user,
+        last_updated_date
     </sql>
     <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
-        from t_core_sys_role
+        from t_core_sys_menu
         where p_id = #{pId,jdbcType=INTEGER}
     </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-        delete from t_core_sys_role
+        delete from t_core_sys_menu
         where p_id = #{pId,jdbcType=INTEGER}
     </delete>
-    <insert id="insert" parameterType="com.zs.aidata.core.sys.role.vo.CoreSysRoleDO">
-        insert into t_core_sys_role ( app_id, role_name,role_code,
-        role_desc, creation_by_id,
+    <insert id="insert" parameterType="com.zs.aidata.core.sys.menu.vo.CoreSysMenuDO">
+        insert into t_core_sys_menu (p_id, app_id, menu_code,
+        menu_name, menu_path, menu_order,
+        parent_menu_code, perm_code, creation_by_id,
         creation_by_user, creation_date, last_updated_by_id,
         last_updated_by_user, last_updated_date)
-        values (#{appId,jdbcType=VARCHAR}, #{roleName,jdbcType=VARCHAR}, #{roleCode,jdbcType=VARCHAR},
-        #{roleDesc,jdbcType=VARCHAR}, #{creationById,jdbcType=VARCHAR},
+        values (#{pId,jdbcType=INTEGER}, #{appId,jdbcType=VARCHAR}, #{menuCode,jdbcType=VARCHAR},
+        #{menuName,jdbcType=VARCHAR}, #{menuPath,jdbcType=VARCHAR}, #{menuOrder,jdbcType=INTEGER},
+        #{parentMenuCode,jdbcType=VARCHAR}, #{permCode,jdbcType=VARCHAR}, #{creationById,jdbcType=VARCHAR},
         #{creationByUser,jdbcType=VARCHAR}, #{creationDate,jdbcType=TIMESTAMP}, #{lastUpdatedById,jdbcType=VARCHAR},
         #{lastUpdatedByUser,jdbcType=VARCHAR}, #{lastUpdatedDate,jdbcType=TIMESTAMP})
     </insert>
-    <insert id="insertSelective" parameterType="com.zs.aidata.core.sys.role.vo.CoreSysRoleDO">
-        insert into t_core_sys_role
+    <insert id="insertSelective" parameterType="com.zs.aidata.core.sys.menu.vo.CoreSysMenuDO">
+        insert into t_core_sys_menu
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="pId != null">
                 p_id,
@@ -47,14 +53,23 @@
             <if test="appId != null">
                 app_id,
             </if>
-            <if test="roleName != null">
-                role_name,
+            <if test="menuCode != null">
+                menu_code,
             </if>
-            <if test="roleCode != null">
-                role_code,
+            <if test="menuName != null">
+                menu_name,
             </if>
-            <if test="roleDesc != null">
-                role_desc,
+            <if test="menuPath != null">
+                menu_path,
+            </if>
+            <if test="menuOrder != null">
+                menu_order,
+            </if>
+            <if test="parentMenuCode != null">
+                parent_menu_code,
+            </if>
+            <if test="permCode != null">
+                perm_code,
             </if>
             <if test="creationById != null">
                 creation_by_id,
@@ -82,14 +97,23 @@
             <if test="appId != null">
                 #{appId,jdbcType=VARCHAR},
             </if>
-            <if test="roleName != null">
-                #{roleName,jdbcType=VARCHAR},
+            <if test="menuCode != null">
+                #{menuCode,jdbcType=VARCHAR},
             </if>
-            <if test="roleCode != null">
-                #{roleCode,jdbcType=VARCHAR},
+            <if test="menuName != null">
+                #{menuName,jdbcType=VARCHAR},
             </if>
-            <if test="roleDesc != null">
-                #{roleDesc,jdbcType=VARCHAR},
+            <if test="menuPath != null">
+                #{menuPath,jdbcType=VARCHAR},
+            </if>
+            <if test="menuOrder != null">
+                #{menuOrder,jdbcType=INTEGER},
+            </if>
+            <if test="parentMenuCode != null">
+                #{parentMenuCode,jdbcType=VARCHAR},
+            </if>
+            <if test="permCode != null">
+                #{permCode,jdbcType=VARCHAR},
             </if>
             <if test="creationById != null">
                 #{creationById,jdbcType=VARCHAR},
@@ -111,20 +135,29 @@
             </if>
         </trim>
     </insert>
-    <update id="updateByPrimaryKeySelective" parameterType="com.zs.aidata.core.sys.role.vo.CoreSysRoleDO">
-        update t_core_sys_role
+    <update id="updateByPrimaryKeySelective" parameterType="com.zs.aidata.core.sys.menu.vo.CoreSysMenuDO">
+        update t_core_sys_menu
         <set>
             <if test="appId != null">
                 app_id = #{appId,jdbcType=VARCHAR},
             </if>
-            <if test="roleName != null">
-                role_name = #{roleName,jdbcType=VARCHAR},
+            <if test="menuCode != null">
+                menu_code = #{menuCode,jdbcType=VARCHAR},
             </if>
-            <if test="roleCode != null">
-                role_code = #{roleCode,jdbcType=VARCHAR},
+            <if test="menuName != null">
+                menu_name = #{menuName,jdbcType=VARCHAR},
             </if>
-            <if test="roleDesc != null">
-                role_desc = #{roleDesc,jdbcType=VARCHAR},
+            <if test="menuPath != null">
+                menu_path = #{menuPath,jdbcType=VARCHAR},
+            </if>
+            <if test="menuOrder != null">
+                menu_order = #{menuOrder,jdbcType=INTEGER},
+            </if>
+            <if test="parentMenuCode != null">
+                parent_menu_code = #{parentMenuCode,jdbcType=VARCHAR},
+            </if>
+            <if test="permCode != null">
+                perm_code = #{permCode,jdbcType=VARCHAR},
             </if>
             <if test="creationById != null">
                 creation_by_id = #{creationById,jdbcType=VARCHAR},
@@ -147,12 +180,15 @@
         </set>
         where p_id = #{pId,jdbcType=INTEGER}
     </update>
-    <update id="updateByPrimaryKey" parameterType="com.zs.aidata.core.sys.role.vo.CoreSysRoleDO">
-        update t_core_sys_role
+    <update id="updateByPrimaryKey" parameterType="com.zs.aidata.core.sys.menu.vo.CoreSysMenuDO">
+        update t_core_sys_menu
         set app_id = #{appId,jdbcType=VARCHAR},
-        role_name = #{roleName,jdbcType=VARCHAR},
-        role_code = #{roleCode,jdbcType=VARCHAR},
-        role_desc = #{roleDesc,jdbcType=VARCHAR},
+        menu_code = #{menuCode,jdbcType=VARCHAR},
+        menu_name = #{menuName,jdbcType=VARCHAR},
+        menu_path = #{menuPath,jdbcType=VARCHAR},
+        menu_order = #{menuOrder,jdbcType=INTEGER},
+        parent_menu_code = #{parentMenuCode,jdbcType=VARCHAR},
+        perm_code = #{permCode,jdbcType=VARCHAR},
         creation_by_id = #{creationById,jdbcType=VARCHAR},
         creation_by_user = #{creationByUser,jdbcType=VARCHAR},
         creation_date = #{creationDate,jdbcType=TIMESTAMP},
@@ -162,27 +198,19 @@
         where p_id = #{pId,jdbcType=INTEGER}
     </update>
 
-    <select id="selectListByRidList" resultMap="BaseResultMap">
-        select
-        <include refid="Base_Column_List"/>
-        from t_core_sys_role
-        where
-        app_id = #{appId,jdbcType=VARCHAR}
-        <if test="ridList != null and ridList.size > 0">
-            <foreach collection="ridList" item="rid" open="and p_id in(" close=")" separator=",">
-                #{rid,jdbcType=INTEGER}
-            </foreach>
-        </if>
-        <if test="ridList == null or ridList.size == 0">
-            <!--没让它一也-->
-            and 1=2
-        </if>
-    </select>
-
     <select id="selectList" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
-        from t_core_sys_role
+        from t_core_sys_menu
         order by last_updated_date desc
+    </select>
+
+
+    <select id="selectMaxOrderByParentMenuCode" resultType="integer">
+        select max(menu_order)
+        from t_core_sys_menu
+        where
+        app_id = #{appId,jdbcType=VARCHAR}
+        and IFNULL(parent_menu_code,'') = IFNULL(#{parentMenuCode,jdbcType=VARCHAR},'')
     </select>
 </mapper>
