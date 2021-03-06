@@ -33,4 +33,27 @@ public interface ICoreSysUserService {
      */
     PageInfo<CoreSysUserDO> findListByPage(CoreSysUserDO queryVO, Integer pageSize,
                                            Integer currPage) throws ArrayIndexOutOfBoundsException;
+
+
+    /**
+     * 添加用户
+     *
+     * @param userDO
+     */
+    void insertUser(CoreSysUserDO userDO);
+
+
+    /**
+     * 修改用户
+     *
+     * @param userDO
+     */
+    void updateUser(CoreSysUserDO userDO);
+
+    /**
+     * 删除用户
+     *
+     * @param pId
+     */
+    void deleteUser(Integer pId);
 }

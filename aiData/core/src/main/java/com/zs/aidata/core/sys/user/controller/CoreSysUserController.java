@@ -44,5 +44,22 @@ public class CoreSysUserController {
         return iCoreSysUserService.findListByPage(queryVO, pageSize, currPage);
     }
 
+    @PostMapping("insertUser")
+    @ApiOperation(value = "添加用户", notes = "添加用户")
+    void insertUser(CoreSysUserDO userDO) {
+        iCoreSysUserService.insertUser(userDO);
+    }
+
+    @PostMapping("updateUser")
+    @ApiOperation(value = "修改用户", notes = "修改用户")
+    void updateUser(CoreSysUserDO userDO) {
+        iCoreSysUserService.updateUser(userDO);
+    }
+
+    @PostMapping("deleteUser/{pId}")
+    @ApiOperation(value = "删除用户", notes = "删除用户")
+    void deleteUser(@PathVariable("pId") Integer pId) {
+        iCoreSysUserService.deleteUser(pId);
+    }
 
 }

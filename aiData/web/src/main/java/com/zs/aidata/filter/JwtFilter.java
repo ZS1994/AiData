@@ -34,7 +34,7 @@ public class JwtFilter implements Filter {
     /**
      * JWT的开关，N：关，其他:开
      */
-    String SWITCH_JWT = "Y";
+    String SWITCH_JWT = "N";
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {

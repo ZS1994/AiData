@@ -223,5 +223,6 @@
         select
         <include refid="Base_Column_List"/>
         from t_core_sys_user
+        order by last_updated_date desc
     </select>
 </mapper>
