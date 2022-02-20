@@ -6,13 +6,14 @@
 		<groupId>com.zs</groupId>
 		<artifactId>aiData</artifactId>
 		<version>1.0-SNAPSHOT</version>
-		<relativePath/> <!-- lookup parent from repository -->
+		<relativePath>../../aiData/pom.xml</relativePath>
 	</parent>
 
 	<groupId>com.zs</groupId>
 	<artifactId>cmcc-impl</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>cmcc-impl</name>
+	<packaging>jar</packaging>
 
 	<properties>
 		<java.version>1.8</java.version>
@@ -31,5 +32,18 @@
 		</dependency>
 	</dependencies>
 
-
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<!--作为组件打包时需要加上这个-->
+					<classifier>exec</classifier>
+					<!--指定启动类，因为这个module没有启动类不指定会打包失败-->
+					<mainClass>com.zs.aidata.WebApplication</mainClass>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 </project>

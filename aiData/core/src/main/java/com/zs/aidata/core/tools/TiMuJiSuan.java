@@ -148,11 +148,4 @@ public class TiMuJiSuan {
 		System.out.println(gson.toJson(arr));
 	}
 	
-	public static void main(String[] args) {
-		TiMuJiSuan ti=new TiMuJiSuan();
-		for (int i = 0; i < 100; i++) {
-			ti.init();
-		}
-	}
-	
 }

@@ -17,10 +17,10 @@ import java.util.Map;
 @Named
 public class DccpService extends BaseCoreService implements IDccpService {
 
-    public static void main(String[] args) {
+    /*public static void main(String[] args) {
         DccpService dccpService = new DccpService();
         dccpService.getVerificationCode("734d900f83cda193f8407a5fda1e01d0ce1854158dcc2cfac62ef51ad0a442bc3689c4a885a8bac0ce51f7f57a6d9bd88e3ad3bb6d39c55c2acb3d9eadb5a45c65b718629a59fc5f7c4f0131adcf7b8fb08ae59d1420d82ce3284c5cfa4d18ce36fa22e61a7834b9bb4024c0f02b5f4f96f1a5575079c885a33fcaaf774ceeac391c17940e2b8a5b72554befc820c6cb3d814bf92b21d173f11f25ac8fe986973c9284f08f85a8f07279850a4f24ccf5a6dc4ae84f446240f71b2d0aec364cf2521ed2b2b4f6bb3ad0a0a1ce18a587e6df9e22625be988a1cb047668b532adb75bc394eff223cb165205fed8bfb6652eacc5835f7253c7ed607cc09e92fd34bb");
-    }
+    }*/
 
 
     /**

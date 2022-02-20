@@ -118,7 +118,7 @@ public class DownloadImg {
     }
 
 
-    public static void main(String[] args) {
+    /*public static void main(String[] args) {
         String url = "http://www.baidu.com/img/baidu_sylogo1.gif";
         String fileName = "百度.gif";
         DownloadImg dli = new DownloadImg();
@@ -132,6 +132,5 @@ public class DownloadImg {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        ;
-    }
+    }*/
 }  

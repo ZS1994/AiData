@@ -94,9 +94,9 @@ public class FtpUtil {
     }
 
 
-    public static void main(String[] args) throws IOException {
+    /*public static void main(String[] args) throws IOException {
         FtpUtil.uploadFile();
-    }
+    }*/
 
 
     private static class MyCSL implements CopyStreamListener {

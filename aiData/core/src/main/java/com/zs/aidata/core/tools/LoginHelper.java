@@ -28,13 +28,13 @@ public class LoginHelper {
     String ZS_PHONE = "15022084174";
 
 
-    public static void main(String[] args) throws IOException {
+    /*public static void main(String[] args) throws IOException {
         LoginHelper test = new LoginHelper();
 //        test.getgmccapp();
 //        test.getIdentifyingCode();
 //        test.getdccp();
         test.handle2T();
-    }
+    }*/
 
     /**
      * 和彩云2T

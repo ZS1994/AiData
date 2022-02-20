@@ -12,6 +12,7 @@
     <modules>
         <module>cmcc-api</module>
         <module>cmcc-impl</module>
+        <module>core</module>
         <module>web</module>
     </modules>
 
@@ -157,10 +158,10 @@
     <!-- Spring Boot也提供了一个可选的 Maven Plugin来创建可执行的jars,可以将应用打包成一个可执行的jar，无需安装tomcat -->
     <build>
         <plugins>
-            <plugin>
+            <!--<plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
+            </plugin>-->
         </plugins>
     </build>
 

@@ -66,11 +66,11 @@ public class StringHelper {
 		return true;
 	}	
 	
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 		System.out.println(StringHelper.checkStar("asdad11sda23232aaa", "asdad*sda*aaa"));
 		System.out.println(StringHelper.checkStar("asdad11sda23232aaa", "asdad11sda23232aaa"));
 		System.out.println(StringHelper.checkStar("asdad11sda23232aaa", "asda22d11sda23232aaa"));
 		System.out.println(StringHelper.checkStar("/zsblogs/menu/blogList/blog/5", "/zsblogs/menu/blogList/blog/*"));
 		System.out.println(StringHelper.checkStar("/zsblogs/menu/blogList/blog/edit/1", "/zsblogs/menu/blogList/blog/*"));
-	}
+	}*/
 }
