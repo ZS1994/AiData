@@ -1,17 +1,21 @@
 package com.zs.aidata.core.tools;
 
-import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
+import org.springframework.stereotype.Component;
 
+/**
+ * 该类已废弃，cn.hutool.extra.spring.SpringUtil是该类的完美上位替代，请用这个
+ */
+@Deprecated
+//@Component
 @Slf4j
 public class SpringUtil implements ApplicationContextAware {
 
     private static ApplicationContext applicationContext;
 
-    @SneakyThrows
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
         if (SpringUtil.applicationContext == null) {

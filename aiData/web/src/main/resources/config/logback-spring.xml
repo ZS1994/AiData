@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration debug="false">
+    <!--日志文件主目录：这里${user.home}为当前服务器用户主目录-->
+    <property name="LOG_HOME" value="${user.home}/log"/>
+    <!--日志文件名称：这里spring.application.name表示工程名称-->
+    <springProperty scope="context" name="APP_NAME" source="spring.application.name"/>
+
+    <!--默认配置-->
+    <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
+    <!--配置控制台(Console)-->
+    <include resource="org/springframework/boot/logging/logback/console-appender.xml"/>
+
+    <!-- 多环境配置 按照active profile选择分支 -->
+    <springProfile name="dev">
+        <!--root节点 全局日志级别，用来指定最基础的日志输出级别-->
+        <root level="info">
+            <appender-ref ref="CONSOLE"/>
+        </root>
+
+        <!-- 子节点向上级传递 局部日志级别-->
+        <logger level="WARN" name="org.springframework"/>
+        <logger level="WARN" name="com.netflix"/>
+        <logger level="DEBUG" name="org.hibernate.SQL"/>
+    </springProfile>
+    <springProfile name="prod">
+
+    </springProfile>
+</configuration>

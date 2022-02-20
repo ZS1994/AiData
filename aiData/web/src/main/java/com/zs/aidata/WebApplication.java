@@ -4,9 +4,11 @@ import com.zs.aidata.listener.ServletContextListener;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.netflix.eureka.server.EnableEurekaServer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 
+@EnableEurekaServer
 @ComponentScan(basePackages = {"com.zs.aidata"})
 @SpringBootApplication
 @MapperScan("com.zs.aidata.**.dao")//使用MapperScan批量扫描所有的Mapper接口；
