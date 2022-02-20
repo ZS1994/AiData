@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Configuration;
  * @author 张顺
  * @since 2021/11/30
  */
-@Configuration
+//@Configuration 暂时不需要启动定时job，所以先注释掉
 public class QuartzConfig {
     @Bean
     public JobDetail jobDetail() {

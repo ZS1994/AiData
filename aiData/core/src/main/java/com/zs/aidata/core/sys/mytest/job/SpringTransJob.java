@@ -23,7 +23,7 @@ public class SpringTransJob extends QuartzJobBean {
     @Override
     protected void executeInternal(JobExecutionContext jobExecutionContext) throws JobExecutionException {
         log.info("=============SpringTransJob=====开始==============");
-        SpringUtil.getBean(ISpringTransTestService.class).processMqs();
+//        SpringUtil.getBean(ISpringTransTestService.class).processMqs();
         log.info("=============SpringTransJob=====结束==============");
     }
 }

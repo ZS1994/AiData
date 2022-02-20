@@ -3,9 +3,13 @@ package com.zs.aidata.core.sys.mytest.job;
 import lombok.extern.slf4j.Slf4j;
 import org.quartz.InterruptableJob;
 import org.quartz.JobExecutionContext;
+import org.quartz.JobExecutionException;
 import org.quartz.UnableToInterruptJobException;
+import org.springframework.scheduling.quartz.QuartzJobBean;
 
 /**
+ * job的守护线程，超时检测
+ *
  * @author 张顺
  * @since 2021/12/26
  */
@@ -24,7 +28,11 @@ public class SpringTransJobTimeOutThread extends Thread {
         this();
         this.context = context;
         if (context != null) {
-            long _temp = context.getJobDetail().getJobDataMap().getLong("TimeOut");
+            Object _tempObj = context.getJobDetail().getJobDataMap().get("TimeOut");
+            long _temp = 0l;
+            if (_tempObj != null) {
+                _temp = (Long) _tempObj;
+            }
             this.timeout = _temp > 0l ? _temp : DEFAULT_TIMEOUT;
         }
     }
@@ -38,9 +46,9 @@ public class SpringTransJobTimeOutThread extends Thread {
             log.error(ire.toString());
         }
         try {
-            ((InterruptableJob) context.getJobInstance())
-                    .interrupt();
-        } catch (UnableToInterruptJobException e) {
+            ((QuartzJobBean) context.getJobInstance())
+                    .execute(context);
+        } catch (JobExecutionException e) {
             throw new RuntimeException("exception", e);
         }
     }
