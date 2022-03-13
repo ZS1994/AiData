@@ -37,6 +37,6 @@ public class ServletContextListener implements ApplicationListener<ContextRefres
         } catch (Exception e) {
             e.printStackTrace();
         }
-        log.info("--------------------------------------");
+        log.info("----------------------------RequiresPermissions----------");
     }
 }
