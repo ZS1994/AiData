@@ -3,6 +3,7 @@ package com.zs.aidata.listener;
 import com.zs.aidata.core.tools.AnnotationUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
@@ -17,6 +18,12 @@ import java.util.Map;
  */
 @Slf4j
 public class ServletContextListener implements ApplicationListener<ContextRefreshedEvent> {
+
+    @Value("${server.port}")
+    private String port;
+    @Value("${server.servlet.context-path}")
+    private String rootStr;
+
     @Override
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
         // 先获取到 application 上下文
@@ -27,16 +34,16 @@ public class ServletContextListener implements ApplicationListener<ContextRefres
         // 获取 application 域对象，将查到的信息放到 application 域中
         ServletContext application = applicationContext.getBean(ServletContext.class);
         application.setAttribute("user", user);*/
-        log.info("项目启动成功。请访问地址：http://localhost:8080/aidata");
-        log.info("--------------------------------------");
+        log.info("项目启动成功。请访问地址：http://localhost:{}{}", port, rootStr);
+        log.info("项目启动成功。Swagger访问地址：http://localhost:{}{}/swagger-ui.html", port, rootStr);
         AnnotationUtil annotationUtil = applicationContext.getBean(AnnotationUtil.class);
         try {
             // 获取所有的权限注解的方法，然后与数据库比对，如果有不一样的就修改
             Map<String, Map<String, Object>> resMap = annotationUtil.getAllAddTagAnnotationUrl("classpath*:com/zs/aidata/**/controller/*.class", RequiresPermissions.class);
-            log.info(resMap.toString());
+            log.info("所有的权限:{}", resMap.toString());
         } catch (Exception e) {
             e.printStackTrace();
         }
-        log.info("----------------------------RequiresPermissions----------");
+        log.info("--------------------权限自动监测及更新完毕----------------");
     }
 }
